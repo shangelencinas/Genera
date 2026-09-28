@@ -79,8 +79,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
               aria-label="Genera Automotriz - Volver al inicio"
             >
               <GeneraLogo
-                className="h-14"
-                imgStyle={{ width: '165.531px', height: '56px' }}
+                className="h-[67px]"
+                imgStyle={{ width: '160.1719px', height: '67px' }}
                 variant="light"
               />
             </a>

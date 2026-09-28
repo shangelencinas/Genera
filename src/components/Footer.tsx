@@ -30,9 +30,9 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#040810] border-t border-slate-800/80 text-slate-300 pt-10 sm:pt-16 pb-20 sm:pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-7 sm:gap-10 lg:gap-12 pb-8 sm:pb-14 border-b border-slate-800/80">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-10 lg:gap-12 pb-8 sm:pb-14 border-b border-slate-800/80">
           {/* Brand Column */}
-          <div className="sm:col-span-2 lg:col-span-4 flex flex-col items-start">
+          <div className="col-span-2 lg:col-span-4 flex flex-col items-start">
             <a href="#inicio" className="mb-3.5 inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1769E0] rounded">
               <GeneraLogo
                 className="h-[60px]"
@@ -78,7 +78,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Empresa Links */}
-          <div className="lg:col-span-2">
+          <div className="col-span-1 lg:col-span-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2.5 sm:mb-4 font-sans">
               EMPRESA
             </h4>
@@ -97,7 +97,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Servicios Links */}
-          <div className="lg:col-span-3">
+          <div className="col-span-1 lg:col-span-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2.5 sm:mb-4 font-sans">
               SERVICIOS
             </h4>
@@ -106,7 +106,7 @@ export const Footer: React.FC = () => {
                 <li key={idx}>
                   <a
                     href={item.href}
-                    className="text-slate-400 hover:text-[#38BDF8] transition-colors py-1 min-h-[34px] flex items-center"
+                    className="text-slate-400 hover:text-[#38BDF8] transition-colors py-1 min-h-[34px] flex items-center leading-snug"
                   >
                     {item.label}
                   </a>
@@ -116,34 +116,34 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Contact Column */}
-          <div className="lg:col-span-3">
+          <div className="col-span-2 lg:col-span-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2.5 sm:mb-4 font-sans">
               CONTACTO DIRECTO
             </h4>
-            <div className="space-y-3 text-xs sm:text-sm">
-              <div>
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-x-4 gap-y-3 items-end text-xs sm:text-sm">
+              <div className="col-start-1 row-start-1 w-[127.5px] lg:w-auto">
                 <span className="text-[10.5px] sm:text-xs text-slate-400 block">WhatsApp de Citas:</span>
                 <a
                   href={CONTACT_INFO.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-white hover:text-emerald-400 font-mono transition-colors text-sm sm:text-base inline-block py-1"
+                  className="font-bold text-white hover:text-emerald-400 font-mono transition-colors text-xs min-[360px]:text-sm sm:text-base inline-block py-0.5 sm:py-1"
                 >
                   {CONTACT_INFO.phoneDisplay}
                 </a>
               </div>
 
-              <div>
+              <div className="col-start-1 row-start-2 w-[127.5px] lg:w-auto">
                 <span className="text-[10.5px] sm:text-xs text-slate-400 block">Ubicación:</span>
                 <span className="text-slate-300">{CONTACT_INFO.locationCity}</span>
               </div>
 
-              <div className="pt-1.5">
+              <div className="col-start-2 row-start-1 row-span-2 flex flex-col justify-end self-end lg:self-auto lg:col-start-auto lg:row-start-auto lg:row-span-1 pt-0 lg:pt-1.5">
                 <a
                   href={CONTACT_INFO.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-600 hover:text-white transition-all text-xs font-semibold min-h-[40px]"
+                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2.5 rounded-lg bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-600 hover:text-white transition-all text-[11px] min-[360px]:text-xs font-semibold min-h-[40px] text-center w-[170.5px] -ml-[10px] lg:ml-0 lg:w-auto"
                 >
                   <MessageCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>Chatear por WhatsApp</span>
