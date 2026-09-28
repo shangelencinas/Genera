@@ -1,4 +1,5 @@
 import React from 'react';
+import { getAssetPath } from '../utils/assets';
 
 interface LogoProps {
   className?: string;
@@ -21,7 +22,7 @@ export const GeneraLogo: React.FC<LogoProps> = ({
   return (
     <div className={`inline-flex items-center select-none max-w-full ${className}`}>
       <img
-        src="/images/LOGO%20GENERA%20-%20AUTOMOTRIZ%20_%20Bco_1.png"
+        src={getAssetPath('/images/LOGO%20GENERA%20-%20AUTOMOTRIZ%20_%20Bco_1.png')}
         alt="Genera Automotriz - Servicio Automotriz Profesional"
         className={imgClassName}
         style={imgStyle}
@@ -40,7 +41,7 @@ export const PeisaLogo: React.FC<{ className?: string }> = ({
   return (
     <div className={`inline-flex items-center justify-center p-1 rounded-xl max-w-full ${className}`}>
       <img
-        src="/images/LogoPeisa_.jpg"
+        src={getAssetPath('/images/LogoPeisa_.jpg')}
         alt="PEISA - Distribución de partes y equipos"
         className="h-full w-auto max-w-full object-contain rounded-[9px]"
         style={{ borderRadius: '9px' }}

@@ -3,6 +3,7 @@ import { Calendar, ArrowRight, ShieldCheck, Wrench, Award, ChevronDown } from 'l
 import { gsap, prefersReducedMotion } from '../animations/gsap';
 import { ThreeHeroCanvas } from './ThreeHeroCanvas';
 import { getWhatsAppUrl } from '../utils/whatsapp';
+import { getAssetPath } from '../utils/assets';
 
 interface HeroProps {
   onOpenAppointmentModal: () => void;
@@ -202,7 +203,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
               <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] overflow-hidden bg-[#0A1628]">
                 {/* Independent Photo Asset: Taller Automotriz Moderno Genera Automotriz */}
                 <img
-                  src="/images/mecanico02.jpg"
+                  src={getAssetPath('/images/mecanico02.jpg')}
                   alt="Taller Automotriz Moderno Genera Automotriz con elevador y diagnóstico"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 />

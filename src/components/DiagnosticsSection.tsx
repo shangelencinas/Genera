@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import { Cpu, CheckCircle2, Calendar, ArrowRight, Activity } from 'lucide-react';
 import { gsap, prefersReducedMotion } from '../animations/gsap';
 import { getWhatsAppUrl } from '../utils/whatsapp';
+import { getAssetPath } from '../utils/assets';
 
 interface DiagnosticsProps {
   onOpenAppointmentModal: (serviceId?: string) => void;
@@ -104,7 +105,7 @@ export const DiagnosticsSection: React.FC<DiagnosticsProps> = ({ onOpenAppointme
               <div className="relative aspect-[4/3] bg-gradient-to-br from-[#060F1E] via-[#09172E] to-[#040914] p-3 sm:p-6 flex flex-col justify-between overflow-hidden">
                 {/* Independent Photo Asset: Diagnóstico Computarizado Genera */}
                 <img
-                  src="/images/genera-diagnostico.jpg"
+                  src={getAssetPath('/images/genera-diagnostico.jpg')}
                   alt="Diagnóstico Computarizado y Scanner Automotriz Genera"
                   className="absolute inset-0 w-full h-full object-cover opacity-30 select-none pointer-events-none mix-blend-luminosity"
                 />

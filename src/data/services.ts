@@ -1,4 +1,5 @@
 import { ServiceItem } from '../types';
+import { getAssetPath } from '../utils/assets';
 
 export const SERVICES_DATA: ServiceItem[] = [
   {
@@ -14,7 +15,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Reparación de fugas y componentes auxiliares'
     ],
     icon: 'wrench',
-    image: '/images/mecanico03.jpg',
+    image: getAssetPath('/images/mecanico03.jpg'),
     category: 'mecanica'
   },
   {
@@ -30,7 +31,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Optimización de estabilidad y control de marcha'
     ],
     icon: 'disc',
-    image: '/images/genera-frenos.jpg',
+    image: getAssetPath('/images/genera-frenos.jpg'),
     category: 'seguridad'
   },
   {
@@ -46,7 +47,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Reporte técnico claro y honesto sobre el estado del auto'
     ],
     icon: 'cpu',
-    image: '/images/genera-diagnostico.jpg',
+    image: getAssetPath('/images/genera-diagnostico.jpg'),
     category: 'electronica'
   },
   {
@@ -62,7 +63,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Revisión de módulos de confort y encendido'
     ],
     icon: 'battery-charging',
-    image: '/images/genera-electrico.jpg',
+    image: getAssetPath('/images/genera-electrico.jpg'),
     category: 'electronica'
   },
   {
@@ -78,7 +79,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Reinicio del contador de servicio del tablero'
     ],
     icon: 'droplet',
-    image: '/images/genera-mecanico.jpg',
+    image: getAssetPath('/images/genera-mecanico.jpg'),
     category: 'mantenimiento'
   },
   {
@@ -94,7 +95,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Ajuste para optimización del consumo de combustible'
     ],
     icon: 'gauge',
-    image: '/images/mecanico02.jpg',
+    image: getAssetPath('/images/mecanico02.jpg'),
     category: 'mantenimiento'
   },
   {
@@ -110,7 +111,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Borrado de testigos y verificación post-reparación'
     ],
     icon: 'scan',
-    image: '/images/genera-diagnostico.jpg',
+    image: getAssetPath('/images/genera-diagnostico.jpg'),
     category: 'electronica'
   },
   {
@@ -126,7 +127,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Calibración y revisión de sensores de presión TPMS'
     ],
     icon: 'circle-dot',
-    image: '/images/suspencion.jpg',
+    image: getAssetPath('/images/suspencion.jpg'),
     category: 'seguridad'
   }
 ];

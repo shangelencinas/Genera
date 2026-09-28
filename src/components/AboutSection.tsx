@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { Shield, Wrench, Cpu, Compass } from 'lucide-react';
 import { gsap, prefersReducedMotion } from '../animations/gsap';
+import { getAssetPath } from '../utils/assets';
 
 export const AboutSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -55,7 +56,7 @@ export const AboutSection: React.FC = () => {
             {/* Left Photo Card: Especialista Mecánico */}
             <div className="lg:col-span-5 relative rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl min-h-[260px] sm:min-h-[320px] lg:min-h-full group bg-slate-950">
               <img
-                src="/images/mecanico01.jpg"
+                src={getAssetPath('/images/mecanico01.jpg')}
                 alt="Técnico Especialista en Genera Automotriz"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

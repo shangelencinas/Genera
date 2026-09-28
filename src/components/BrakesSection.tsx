@@ -2,6 +2,7 @@ import React, { useState, useLayoutEffect, useRef } from 'react';
 import { Disc, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { gsap, prefersReducedMotion } from '../animations/gsap';
 import { getWhatsAppUrl } from '../utils/whatsapp';
+import { getAssetPath } from '../utils/assets';
 
 interface BrakesProps {
   onOpenAppointmentModal: (serviceId?: string) => void;
@@ -111,7 +112,7 @@ export const BrakesSection: React.FC<BrakesProps> = ({ onOpenAppointmentModal })
               <div className="aspect-[4/3] sm:aspect-[16/11] relative overflow-hidden flex items-center justify-center">
                 {/* Independent Photo Asset: Frenos o Suspensión */}
                 <img
-                  src={activeTab === 'suspension' ? '/images/suspencion.jpg' : '/images/balatas.jpg'}
+                  src={activeTab === 'suspension' ? getAssetPath('/images/suspencion.jpg') : getAssetPath('/images/balatas.jpg')}
                   alt={activeTab === 'suspension' ? 'Suspensión y amortiguadores - Genera Automotriz' : 'Servicio de Frenos y Balatas - Genera Automotriz'}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />

@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import { Wrench, Check, ArrowRight, ShieldCheck, Cog } from 'lucide-react';
 import { gsap, prefersReducedMotion } from '../animations/gsap';
 import { getWhatsAppUrl } from '../utils/whatsapp';
+import { getAssetPath } from '../utils/assets';
 
 interface MechanicsProps {
   onOpenAppointmentModal: (serviceId?: string) => void;
@@ -73,7 +74,7 @@ export const MechanicsSection: React.FC<MechanicsProps> = ({ onOpenAppointmentMo
               <div className="h-[800px] relative overflow-hidden flex items-center justify-center">
                 {/* Independent Photo Asset: Mantenimiento de Motor y Mecánica */}
                 <img
-                  src="/images/Mecanica%20General.jpg"
+                  src={getAssetPath('/images/Mecanica%20General.jpg')}
                   alt="Mecánica Automotriz y Mantenimiento de Motor - Genera Automotriz"
                   className="w-full h-[800px] object-cover transition-transform duration-700 group-hover:scale-105"
                   style={{ height: '800px' }}
