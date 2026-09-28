@@ -1,0 +1,6 @@
+{
+  "name": "Genera Automotriz",
+  "description": "Genera Automotriz ofrece mecánica general, frenos y suspensión, diagnóstico computarizado, sistema eléctrico y servicios automotrices profesionales.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
