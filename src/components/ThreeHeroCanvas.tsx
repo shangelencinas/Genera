@@ -29,8 +29,8 @@ export const ThreeHeroCanvas: React.FC = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     container.appendChild(renderer.domElement);
 
-    // 1. Particle Constellation Network (Digital Automotive Telemetry)
-    const particleCount = isMobile ? 55 : 120;
+    // 1. Subtle Constellation Network (Light & Minimalist Telemetry)
+    const particleCount = isMobile ? 22 : 44;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -62,44 +62,31 @@ export const ThreeHeroCanvas: React.FC = () => {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // Particle Point Material
+    // Particle Point Material (Lighter and subtler)
     const pointMaterial = new THREE.PointsMaterial({
-      size: isMobile ? 0.35 : 0.45,
+      size: isMobile ? 0.28 : 0.36,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.65,
       blending: THREE.AdditiveBlending
     });
     const points = new THREE.Points(geometry, pointMaterial);
     scene.add(points);
 
-    // 2. Dynamic Connecting Lines (Engineering Graph)
+    // 2. Minimal Connecting Lines (Clean, non-saturated network)
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0x1d70e2,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.1,
       blending: THREE.AdditiveBlending
     });
 
-    const maxLineSegments = isMobile ? 120 : 280;
+    const maxLineSegments = isMobile ? 30 : 65;
     const linePositions = new Float32Array(maxLineSegments * 6);
     const lineGeometry = new THREE.BufferGeometry();
     lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
     const lineMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(lineMesh);
-
-    // 3. Precision Engineering Wireframe Torus/Ring (Automotive Hub Metaphor)
-    const ringGeo = new THREE.TorusGeometry(7.5, 0.05, 12, 60);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x1769e0,
-      transparent: true,
-      opacity: 0.22,
-      wireframe: true
-    });
-    const techRing = new THREE.Mesh(ringGeo, ringMat);
-    techRing.position.set(6, -1, -4);
-    techRing.rotation.x = Math.PI * 0.25;
-    scene.add(techRing);
 
     // Mouse Tracking for Smooth Interaction
     let targetMouseX = 0;
@@ -144,10 +131,6 @@ export const ThreeHeroCanvas: React.FC = () => {
         camera.position.x = currentMouseX;
         camera.position.y = currentMouseY;
         camera.lookAt(0, 0, 0);
-
-        // Slow rotation of technological ring
-        techRing.rotation.z = elapsedTime * 0.08;
-        techRing.rotation.y = elapsedTime * 0.05;
       }
 
       // Update particle positions gently
@@ -158,7 +141,7 @@ export const ThreeHeroCanvas: React.FC = () => {
       const lineArray = linePosAttr.array as Float32Array;
 
       let lineIndex = 0;
-      const maxDistance = isMobile ? 4.5 : 5.8;
+      const maxDistance = isMobile ? 3.2 : 4.0;
 
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
@@ -208,8 +191,6 @@ export const ThreeHeroCanvas: React.FC = () => {
       pointMaterial.dispose();
       lineGeometry.dispose();
       lineMaterial.dispose();
-      ringGeo.dispose();
-      ringMat.dispose();
       renderer.dispose();
 
       if (container.contains(renderer.domElement)) {
