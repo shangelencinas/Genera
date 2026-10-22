@@ -22,7 +22,14 @@ import { getWhatsAppUrl } from './utils/whatsapp';
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'blog-template'>('blog-template');
+  const [currentView, setCurrentView] = useState<'home' | 'blog-template'>(() => {
+    if (typeof window !== 'undefined') {
+      return (window.location.hash === '#blog-template' || window.location.hash === '#single-post')
+        ? 'blog-template'
+        : 'home';
+    }
+    return 'home';
+  });
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -34,15 +41,9 @@ export default function App() {
       }
     };
 
-    if (window.location.hash === '#blog-template' || window.location.hash === '#single-post') {
-      setCurrentView('blog-template');
-    } else if (window.location.hash === '#inicio') {
-      setCurrentView('home');
-    }
-
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView]);
+  }, []);
 
   const handleOpenAppointmentModal = (serviceId?: string) => {
     window.location.href = getWhatsAppUrl(serviceId);
@@ -76,7 +77,6 @@ export default function App() {
       {/* Sticky High-Tech Navigation Header */}
       <Header 
         onOpenAppointmentModal={handleOpenAppointmentModal}
-        onOpenBlogTemplate={handleOpenBlogTemplate}
       />
 
       {/* Main Content Sections - Clean, fast, mobile-first */}
