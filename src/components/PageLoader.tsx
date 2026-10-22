@@ -17,11 +17,11 @@ export const PageLoader: React.FC<PageLoaderProps> = ({ onLoaded }) => {
 
     const timer1 = setTimeout(() => {
       setFading(true);
-    }, 750);
+    }, 200);
 
     const timer2 = setTimeout(() => {
       onLoaded();
-    }, 1100);
+    }, 450);
 
     return () => {
       clearTimeout(timer1);

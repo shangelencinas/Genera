@@ -57,7 +57,7 @@ export const PeisaPartnership: React.FC = () => {
 
           {/* Clean PEISA Logo on Pristine Card */}
           <div className="shrink-0 flex items-center justify-center max-w-full w-full sm:w-auto">
-            <PeisaLogo className="h-11 sm:h-14 max-w-full" />
+            <PeisaLogo className="h-auto max-w-full" />
           </div>
         </div>
       </div>

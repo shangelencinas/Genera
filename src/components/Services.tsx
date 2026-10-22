@@ -84,25 +84,25 @@ export const Services: React.FC<ServicesProps> = ({ onOpenAppointmentModal }) =>
 
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-8 sm:mb-14 lg:mb-20">
+        <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#164B9B]/25 border border-[#1769E0]/40 text-[#38BDF8] text-[10.5px] sm:text-xs font-bold tracking-wider sm:tracking-widest uppercase mb-2.5 sm:mb-4 shadow-[0_0_12px_rgba(23,105,224,0.3)]">
             <Wrench className="w-3.5 h-3.5 text-[#38BDF8]" />
-            <span>NUESTROS SERVICIOS</span>
+            <span>SERVICIOS PRINCIPALES</span>
           </div>
 
           <h2 className="text-2xl min-[360px]:text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-2.5 sm:mb-4 leading-tight">
-            TODO LO QUE TU AUTO NECESITA
+            SERVICIOS ESPECIALIZADOS PARA TU VEHÍCULO
           </h2>
 
-          <p className="text-xs min-[360px]:text-sm sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto">
-            Soluciones profesionales para mantener tu vehículo seguro, confiable y en óptimas condiciones con tecnología especializada.
+          <p className="text-xs min-[360px]:text-sm sm:text-base text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto">
+            Diagnóstico, mecánica general, frenos, suspensión, alineación/balanceo y llantas. Mantenimiento profesional con refacciones de calidad y garantía por escrito.
           </p>
         </div>
 
-        {/* 8 Services Grid */}
+        {/* 6 Services Grid (3 columns on desktop, 2 on tablet, 1 on mobile) */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
         >
           {SERVICES_DATA.map((service) => (
             <ServiceCard

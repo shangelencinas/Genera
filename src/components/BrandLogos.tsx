@@ -35,16 +35,17 @@ export const GeneraLogo: React.FC<LogoProps> = ({
  * PEISA Commercial Alliance Logo
  * Uses independent image asset from /images/peisa-logo.png
  */
-export const PeisaLogo: React.FC<{ className?: string }> = ({
-  className = 'h-12 sm:h-14'
+export const PeisaLogo: React.FC<{ className?: string; imgStyle?: React.CSSProperties }> = ({
+  className = '',
+  imgStyle
 }) => {
   return (
     <div className={`inline-flex items-center justify-center p-1 rounded-xl max-w-full ${className}`}>
       <img
         src={getAssetPath('/images/LogoPeisa_.jpg')}
         alt="PEISA - Distribución de partes y equipos"
-        className="h-full w-auto max-w-full object-contain rounded-[9px]"
-        style={{ borderRadius: '9px' }}
+        className="w-[240px] h-[70px] max-w-full object-contain rounded-[9px]"
+        style={{ width: '240px', height: '70px', borderRadius: '9px', ...imgStyle }}
       />
     </div>
   );

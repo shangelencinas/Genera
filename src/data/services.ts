@@ -3,131 +3,108 @@ import { getAssetPath } from '../utils/assets';
 
 export const SERVICES_DATA: ServiceItem[] = [
   {
-    id: 'mecanica-general',
+    id: 'diagnostico',
     number: '01',
-    title: 'Mecánica General',
-    description: 'Mantenimiento preventivo y correctivo para mantener el funcionamiento óptimo de tu vehículo.',
-    details: [
-      'Inspección integral de motor y componentes móviles',
-      'Mantenimiento preventivo programado y correctivo',
-      'Diagnóstico y sustitución de bandas y mangueras',
-      'Revisión y ajuste del sistema de enfriamiento',
-      'Reparación de fugas y componentes auxiliares'
-    ],
-    icon: 'wrench',
-    image: getAssetPath('/images/mecanico03.jpg'),
-    category: 'mecanica'
-  },
-  {
-    id: 'frenos-suspension',
-    number: '02',
-    title: 'Frenos y Suspensión',
-    description: 'Seguridad y desempeño en cada camino.',
-    details: [
-      'Revisión y reemplazo de pastillas (balatas) y rotores',
-      'Rectificación de discos y purga de líquido de frenos',
-      'Diagnóstico de amortiguadores, bases y resortes',
-      'Inspección de terminales, rótulas y bieletas',
-      'Optimización de estabilidad y control de marcha'
-    ],
-    icon: 'disc',
-    image: getAssetPath('/images/genera-frenos.jpg'),
-    category: 'seguridad'
-  },
-  {
-    id: 'diagnostico-computarizado',
-    number: '03',
     title: 'Diagnóstico Computarizado',
-    description: 'Tecnología avanzada para detectar fallas con precisión.',
+    description: 'Escáner automotriz multimarca para identificar la falla exacta antes de tocar cualquier pieza.',
     details: [
-      'Lectura e interpretación de códigos de error OBD-II',
-      'Monitoreo de parámetros en tiempo real del motor',
-      'Calibración y reseteo de módulos electrónicos',
-      'Detección de averías intermitentes en sensores',
-      'Reporte técnico claro y honesto sobre el estado del auto'
+      'Lectura e interpretación precisa de códigos de error OBD-II en tiempo real',
+      'Monitoreo de parámetros de sensores de motor, transmisión y frenos',
+      'Detección de causas raíz sin adivinar ni cambiar piezas al azar',
+      'Reporte técnico claro con explicación transparente para el cliente',
+      'Pruebas dinámicas de actuadores y reseteo de testigos de tablero'
     ],
     icon: 'cpu',
     image: getAssetPath('/images/genera-diagnostico.jpg'),
+    badge: 'Especialidad',
     category: 'electronica'
   },
   {
-    id: 'sistema-electrico',
+    id: 'mecanica-general',
+    number: '02',
+    title: 'Mecánica General',
+    description: 'Mantenimiento preventivo y correctivo con refacciones certificadas para alargar la vida de tu motor.',
+    details: [
+      'Afinación mayor y menor con lavado de inyectores por ultrasonido',
+      'Cambio de aceite sintético o multigrado de alta gama y filtros nuevos',
+      'Inspección y reemplazo preventivo de bandas, mangueras y termostatos',
+      'Detección y corrección de fugas de fluidos y sistema de enfriamiento',
+      'Servicio integral a motor y componentes de tracción'
+    ],
+    icon: 'wrench',
+    image: getAssetPath('/images/Mecanica General.jpg'),
+    category: 'mecanica'
+  },
+  {
+    id: 'frenos',
+    number: '03',
+    title: 'Frenos',
+    description: 'Inspección de alta seguridad, cambio de balatas y rectificación para una frenada firme e inmediata.',
+    details: [
+      'Diagnóstico de vida útil de balatas (pastillas) y rotores',
+      'Rectificación milimétrica de discos y tambores con equipo de precisión',
+      'Purga y renovación de líquido de frenos de especificación OEM',
+      'Mantenimiento y lubricación de calipers, pernos y cilindros de rueda',
+      'Prueba de frenado y ajuste de freno de estacionamiento'
+    ],
+    icon: 'disc',
+    image: getAssetPath('/images/balatas.jpg'),
+    category: 'seguridad'
+  },
+  {
+    id: 'suspension',
     number: '04',
-    title: 'Sistema Eléctrico',
-    description: 'Diagnóstico y reparación de sistemas eléctricos y electrónicos.',
+    title: 'Suspensión',
+    description: 'Amortiguadores, rótulas y terminales para eliminar ruidos molestos, brincos y recuperar la estabilidad.',
     details: [
-      'Pruebas de rendimiento de batería y sistema de carga',
-      'Diagnóstico y servicio de alternador y marcha',
-      'Reparación de cableados, fusibles y relevadores',
-      'Sistemas de iluminación frontal y señalización',
-      'Revisión de módulos de confort y encendido'
+      'Diagnóstico y cambio de amortiguadores, bases y resortes',
+      'Inspección de terminales de dirección, rótulas y bieletas estabilizadoras',
+      'Reemplazo de bujes de horquilla dañados para absorber baches',
+      'Recuperación de la firmeza, suavidad y control en carretera y ciudad',
+      'Eliminación de ruidos secos, rechinidos y holguras al volante'
     ],
-    icon: 'battery-charging',
-    image: getAssetPath('/images/genera-electrico.jpg'),
-    category: 'electronica'
+    icon: 'gauge',
+    image: getAssetPath('/images/suspencion.jpg'),
+    category: 'seguridad'
   },
   {
-    id: 'cambio-aceite',
+    id: 'alineacion-balanceo',
     number: '05',
-    title: 'Cambio de Aceite',
-    description: 'Mantenimiento esencial para proteger el motor.',
+    title: 'Alineación y Balanceo',
+    description: 'Alineación 3D computarizada y balanceo para eliminar vibraciones en el volante y evitar desgaste disparejo.',
     details: [
-      'Drenado y sustitución con aceites sintéticos o multigrado certificados',
-      'Reemplazo de filtro de aceite de alta retención',
-      'Revisión y nivelación de 5 fluidos esenciales',
-      'Inspección visual de puntos de seguridad',
-      'Reinicio del contador de servicio del tablero'
+      'Alineación computarizada de alta precisión de ejes delantero y trasero',
+      'Balanceo dinámico de ruedas por computadora para eliminar vibraciones',
+      'Prevención activa de desgaste prematuro e irregular de tus neumáticos',
+      'Dirección centrada, suave y con respuesta inmediata al conducir',
+      'Ajuste de convergencia, cámber y cáster según especificaciones de fábrica'
     ],
-    icon: 'droplet',
+    icon: 'scan',
     image: getAssetPath('/images/genera-mecanico.jpg'),
     category: 'mantenimiento'
   },
   {
-    id: 'afinacion',
-    number: '06',
-    title: 'Afinación Mayor y Menor',
-    description: 'Servicio especializado para mantener el rendimiento y eficiencia.',
-    details: [
-      'Reemplazo de bujías (platino, iridio o convencionales)',
-      'Cambio de filtro de aire de motor y filtro de gasolina',
-      'Limpieza profunda del cuerpo de aceleración',
-      'Lavado y balanceo de inyectores por ultrasonido o presurizado',
-      'Ajuste para optimización del consumo de combustible'
-    ],
-    icon: 'gauge',
-    image: getAssetPath('/images/mecanico02.jpg'),
-    category: 'mantenimiento'
-  },
-  {
-    id: 'scanner-automotriz',
-    number: '07',
-    title: 'Scanner Automotriz',
-    description: 'Diagnóstico electrónico mediante tecnología especializada.',
-    details: [
-      'Escaneo multimarca con software de grado profesional',
-      'Análisis de datos congelados (Freeze Frame)',
-      'Pruebas activas de actuadores mecánicos y eléctricos',
-      'Identificación de fallas en transmisión y ABS/Airbags',
-      'Borrado de testigos y verificación post-reparación'
-    ],
-    icon: 'scan',
-    image: getAssetPath('/images/genera-diagnostico.jpg'),
-    category: 'electronica'
-  },
-  {
     id: 'llantas',
-    number: '08',
-    title: 'Alineación y Balanceo',
-    description: 'Alineación por computadora y balanceo dinámico para máxima estabilidad y seguridad.',
+    number: '06',
+    title: 'Llantas',
+    description: 'Venta, montaje, rotación y parchado profesional para maximizar el agarre y la vida de tus neumáticos.',
     details: [
-      'Alineación computarizada delantera y trasera con especificaciones OEM',
-      'Balanceo dinámico y de precisión en las 4 ruedas',
-      'Inspección de desgaste irregular y profundidad de piso',
-      'Rotación preventiva según especificaciones del fabricante',
-      'Calibración y revisión de sensores de presión TPMS'
+      'Venta de llantas nuevas de marcas líderes y en medidas exactas',
+      'Montaje y desmontaje profesional cuidando tus rines de aluminio',
+      'Rotación programada para desgaste parejo y mayor kilometraje',
+      'Reparación profesional de ponchaduras con parche vulcanizado interno',
+      'Inspección de presión y válvulas de inflado de alta durabilidad'
     ],
     icon: 'circle-dot',
-    image: getAssetPath('/images/suspencion.jpg'),
-    category: 'seguridad'
+    image: getAssetPath('/images/genera-llantas.jpg'),
+    category: 'mantenimiento'
   }
+];
+
+export const SERVICE_CATEGORIES = [
+  { id: 'todos', label: 'Todos los Servicios' },
+  { id: 'mecanica', label: 'Mecánica General' },
+  { id: 'seguridad', label: 'Frenos y Suspensión' },
+  { id: 'mantenimiento', label: 'Llantas, Alineación y Balanceo' },
+  { id: 'electronica', label: 'Diagnóstico' }
 ];

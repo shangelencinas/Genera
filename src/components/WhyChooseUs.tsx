@@ -71,7 +71,7 @@ export const WhyChooseUs: React.FC = () => {
 
   return (
     <section
-      id="por-que-genera"
+      id="garantia-beneficios"
       ref={sectionRef}
       className="relative py-14 sm:py-20 lg:py-32 bg-[#050C17] text-white overflow-hidden border-t border-slate-800"
     >
