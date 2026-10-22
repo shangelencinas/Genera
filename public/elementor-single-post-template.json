@@ -1,0 +1,196 @@
+{
+  "version": "0.4",
+  "title": "Genera Automotriz - Plantilla Blog Post",
+  "type": "page",
+  "content": [
+    {
+      "id": "b8c2e1f",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "content_width": {
+          "unit": "px",
+          "size": 860
+        },
+        "background_background": "classic",
+        "background_color": "#07111F",
+        "padding": {
+          "unit": "px",
+          "top": "40",
+          "right": "20",
+          "bottom": "20",
+          "left": "20",
+          "is_linked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "a4d7f90",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "c1e3a5b",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"display:flex; align-items:center; gap:8px; font-size:13px; color:#94A3B8; font-family:'Plus Jakarta Sans',system-ui,sans-serif; margin-bottom:16px;\"><a href=\"/\" style=\"color:#94A3B8; text-decoration:none;\">Inicio</a><span>/</span><a href=\"/blog\" style=\"color:#94A3B8; text-decoration:none;\">Blog</a><span>/</span><span style=\"color:#CBD5E1;\">Frenos y Mecánica</span></div>"
+              }
+            },
+            {
+              "id": "d2f4b6c",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"display:flex; align-items:center; gap:10px; margin-bottom:18px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;\"><span style=\"display:inline-flex; align-items:center; gap:6px; padding:5px 14px; background:rgba(23,105,224,0.15); border:1px solid rgba(23,105,224,0.4); color:#60A5FA; font-size:12px; font-weight:700; text-transform:uppercase; border-radius:9999px;\">Mantenimiento Preventivo</span><span style=\"display:inline-flex; align-items:center; gap:5px; padding:5px 12px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); color:#34D399; font-size:12px; font-weight:600; border-radius:9999px;\">Diagnóstico Certificado</span></div>"
+              }
+            },
+            {
+              "id": "e3a5c7d",
+              "elType": "widget",
+              "widgetType": "heading",
+              "isInner": false,
+              "settings": {
+                "title": "5 Señales de que los Frenos de tu Auto Necesitan Cambio Inmediato en Hermosillo",
+                "header_size": "h1",
+                "align": "left",
+                "title_color": "#FFFFFF",
+                "typography_typography": "custom",
+                "typography_font_family": "Plus Jakarta Sans",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 40
+                },
+                "typography_font_weight": "800",
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.2
+                }
+              }
+            },
+            {
+              "id": "f4b6d8e",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; padding:16px 0; border-top:1px solid rgba(51,65,85,0.5); border-bottom:1px solid rgba(51,65,85,0.5); font-family:'Plus Jakarta Sans',system-ui,sans-serif;\"><div style=\"display:flex; align-items:center; gap:12px;\"><img src=\"https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=150&q=80\" style=\"width:42px; height:42px; border-radius:9999px; object-fit:cover; border:2px solid #1769E0;\" alt=\"Autor Genera\" /><div><div style=\"font-size:14px; font-weight:700; color:#F8FAFC;\">Equipo Técnico Genera</div><div style=\"font-size:12px; color:#94A3B8;\">Especialistas en Diagnóstico Automotriz</div></div></div><div style=\"display:flex; align-items:center; gap:14px; font-size:13px; color:#94A3B8;\"><span>📅 Octubre 2024</span><span>⏱️ 5 min de lectura</span></div></div>"
+              }
+            },
+            {
+              "id": "a5c7e9f",
+              "elType": "widget",
+              "widgetType": "image",
+              "isInner": false,
+              "settings": {
+                "image": {
+                  "url": "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1200&q=80",
+                  "id": ""
+                },
+                "image_size": "full",
+                "caption_source": "custom",
+                "caption": "Inspección minuciosa del grosor de balatas y rectificado de discos en nuestro taller en Hermosillo."
+              }
+            },
+            {
+              "id": "b6d8f0a",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; background:rgba(15,23,42,0.7); border:1px solid rgba(51,65,85,0.7); padding:14px 18px; border-radius:14px; margin-top:20px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;\"><span style=\"font-size:13px; font-weight:700; color:#CBD5E1; text-transform:uppercase;\">Compartir esta guía:</span><div style=\"display:flex; align-items:center; gap:8px; flex-wrap:wrap;\"><a href=\"https://api.whatsapp.com/send?text=Te%20comparto%20esta%20gu%C3%ADa%20de%20frenos%20de%20Genera%20Automotriz%20en%20Hermosillo\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-flex; align-items:center; gap:6px; background:#059669; color:#FFFFFF; font-size:12px; font-weight:600; padding:6px 14px; border-radius:9999px; text-decoration:none;\">WhatsApp</a><a href=\"https://www.facebook.com/sharer/sharer.php?u=https://generaautomotriz.com\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-flex; align-items:center; gap:6px; background:#1877F2; color:#FFFFFF; font-size:12px; font-weight:600; padding:6px 14px; border-radius:9999px; text-decoration:none;\">Facebook</a><a href=\"https://www.instagram.com/generaautomotriz/\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-flex; align-items:center; gap:6px; background:linear-gradient(45deg,#f09433,#dc2743,#bc1888); color:#FFFFFF; font-size:12px; font-weight:600; padding:6px 14px; border-radius:9999px; text-decoration:none;\">Instagram</a></div></div>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c7e9a1b",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "content_width": {
+          "unit": "px",
+          "size": 860
+        },
+        "background_background": "classic",
+        "background_color": "#07111F",
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "20",
+          "bottom": "50",
+          "left": "20",
+          "is_linked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "d8f0b2c",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "e9a1c3d",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"background:rgba(11,23,39,0.85); border:1px solid rgba(23,105,224,0.35); border-radius:14px; padding:20px; margin-bottom:30px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;\"><div style=\"font-size:14px; font-weight:700; color:#60A5FA; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:8px;\">📋 Contenido del Artículo</div><ul style=\"list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; font-size:14px;\"><li><a href=\"#senial-1\" style=\"color:#CBD5E1; text-decoration:none;\">1. Chirrido metálico agudo al frenar</a></li><li><a href=\"#senial-2\" style=\"color:#CBD5E1; text-decoration:none;\">2. Pedal esponjoso o se va al fondo</a></li><li><a href=\"#senial-3\" style=\"color:#CBD5E1; text-decoration:none;\">3. Vibración en el volante a alta velocidad</a></li><li><a href=\"#senial-4\" style=\"color:#CBD5E1; text-decoration:none;\">4. El auto se jala hacia un lado</a></li><li><a href=\"#senial-5\" style=\"color:#CBD5E1; text-decoration:none;\">5. Olor a quemado en tráfico pesado</a></li></ul></div>"
+              }
+            },
+            {
+              "id": "f0b2d4e",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "isInner": false,
+              "settings": {
+                "editor": "<p style=\"font-size:18px; line-height:1.75; color:#F1F5F9; border-left:3.5px solid #1769E0; padding-left:16px; margin-bottom:24px;\">El calor extremo de Hermosillo y el tráfico diario someten al sistema de frenos a temperaturas superiores a los 300°C. Ignorar un sonido o cambio en el pedal puede convertir una simple reposición de balatas en un costoso reemplazo de discos o calipers.</p><p style=\"font-size:16px; line-height:1.8; color:#CBD5E1; margin-bottom:20px;\">En <strong>Genera Automotriz</strong> creemos firmemente en nuestra regla de oro: <em>'Primero diagnosticamos, tú autorizas y después reparamos'</em>. Antes de gastar en refacciones innecesarias, te explicamos cómo identificar con precisión qué le ocurre a tu vehículo.</p><h2 id=\"senial-1\" style=\"color:#FFFFFF; font-size:24px; font-weight:800; margin:36px 0 16px; border-bottom:1px solid #334155; padding-bottom:8px;\">1. Chirrido metálico agudo al pisar el pedal</h2><p style=\"font-size:16px; line-height:1.8; color:#CBD5E1; margin-bottom:20px;\">La mayoría de las balatas modernas cuentan con una pequeña lámina metálica llamada testigo de desgaste. Cuando la pasta de fricción llega a menos de 3 milímetros de espesor, este testigo roza contra el disco para avisarte acústicamente que ha llegado el momento de cambiarlas.</p><h2 id=\"senial-2\" style=\"color:#FFFFFF; font-size:24px; font-weight:800; margin:36px 0 16px; border-bottom:1px solid #334155; padding-bottom:8px;\">2. El pedal se siente esponjoso o se va hasta el fondo</h2><p style=\"font-size:16px; line-height:1.8; color:#CBD5E1; margin-bottom:20px;\">Al pisar el freno, la respuesta debe ser firme e inmediata. Si sientes que el pedal baja más de lo normal o da una sensación de 'esponja', generalmente significa presencia de burbujas de aire en las líneas hidráulicas o líquido de frenos degradado con humedad acumulada.</p><h2 id=\"senial-3\" style=\"color:#FFFFFF; font-size:24px; font-weight:800; margin:36px 0 16px; border-bottom:1px solid #334155; padding-bottom:8px;\">3. Vibración en el volante al frenar</h2><p style=\"font-size:16px; line-height:1.8; color:#CBD5E1; margin-bottom:20px;\">Si notas vibraciones en el volante al presionar el freno a más de 60 km/h, indica discos de freno deformados u ondulados por el choque térmico.</p>"
+              }
+            },
+            {
+              "id": "a1c3e5f",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"background:linear-gradient(135deg, #0A1C36 0%, #0F2A52 100%); border:1.5px solid #1769E0; border-radius:16px; padding:32px 24px; text-align:center; margin:40px 0; font-family:'Plus Jakarta Sans',system-ui,sans-serif; box-shadow:0 20px 40px -10px rgba(23,105,224,0.25);\"><h3 style=\"color:#FFFFFF; font-size:24px; font-weight:800; margin-bottom:10px;\">¿Tu auto presenta alguno de estos síntomas?</h3><p style=\"color:#CBD5E1; font-size:15px; max-width:560px; margin:0 auto 20px auto; line-height:1.6;\">No te arriesgues en las calles de Sonora. Agenda una revisión de frenos y diagnóstico computarizado con el equipo técnico de Genera Automotriz.</p><a href=\"https://wa.me/526624330056?text=Hola%20Genera%20Automotriz,%20leí%20su%20guía%20de%20frenos%20y%20quiero%20agendar%20cita\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-flex; align-items:center; gap:10px; background:#059669; color:#FFFFFF; font-size:15px; font-weight:700; padding:14px 28px; border-radius:9999px; text-decoration:none; box-shadow:0 8px 20px rgba(5,150,105,0.4);\">💬 Agendar Cita por WhatsApp (662 433 0056)</a></div>"
+              }
+            },
+            {
+              "id": "b2d4f6a",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"display:flex; align-items:center; gap:20px; background:rgba(15,23,42,0.7); border:1px solid rgba(51,65,85,0.6); border-radius:16px; padding:24px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;\"><img src=\"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80\" style=\"width:72px; height:72px; border-radius:9999px; object-fit:cover; border:2px solid #1769E0;\" alt=\"Autor Genera\" /><div><h4 style=\"font-size:17px; font-weight:700; color:#FFFFFF; margin-bottom:4px;\">Equipo Técnico de Genera Automotriz</h4><div style=\"font-size:13px; color:#38BDF8; margin-bottom:8px;\">Taller Automotriz Especializado · Hermosillo, Sonora</div><p style=\"font-size:13.5px; color:#94A3B8; line-height:1.6; margin:0;\">Comprometidos con el diagnóstico honesto, refacciones de calidad PEISA y servicio profesional sin piezas innecesarias.</p></div></div>"
+              }
+            },
+            {
+              "id": "c3e5a7b",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<div style=\"background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(7,17,31,0.95)); border:1px solid rgba(23,105,224,0.35); border-radius:20px; padding:28px 24px; text-align:center; margin-top:40px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;\"><div style=\"font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#60A5FA; margin-bottom:8px;\">Comunidad Genera Automotriz</div><h3 style=\"font-size:20px; font-weight:800; color:#FFFFFF; margin:0 0 10px 0;\">¿Te sirvió esta guía? Síguenos en Redes Sociales</h3><p style=\"font-size:14px; color:#94A3B8; max-width:540px; margin:0 auto 20px auto; line-height:1.6;\">Tips mecánicos semanales para sobrevivir al calor extremo de Sonora, consejos preventivos y promociones en Hermosillo.</p><div style=\"display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px;\"><a href=\"https://www.facebook.com/GeneraAutomotriz\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-flex; align-items:center; gap:8px; background:#1877F2; color:#FFFFFF; font-size:13px; font-weight:700; padding:10px 20px; border-radius:9999px; text-decoration:none;\">Seguir en Facebook</a><a href=\"https://www.instagram.com/generaautomotriz/\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-flex; align-items:center; gap:8px; background:linear-gradient(45deg,#f09433,#dc2743,#bc1888); color:#FFFFFF; font-size:13px; font-weight:700; padding:10px 20px; border-radius:9999px; text-decoration:none;\">Seguir en Instagram</a><a href=\"https://wa.me/526624330056\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-flex; align-items:center; gap:8px; background:#059669; color:#FFFFFF; font-size:13px; font-weight:700; padding:10px 20px; border-radius:9999px; text-decoration:none;\">WhatsApp Taller</a></div></div>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

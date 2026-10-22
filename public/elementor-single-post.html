@@ -1,0 +1,1447 @@
+<!-- =======================================================================
+  GENERA AUTOMOTRIZ - PLANTILLA DE BLOG POST PARA ELEMENTOR / WORDPRESS
+  OPTIMIZADA PARA COMPARTIR EN FACEBOOK, INSTAGRAM Y WHATSAPP
+  =======================================================================
+  Instrucciones de uso en WordPress / Elementor:
+  1. OPCIÓN A (Widget HTML):
+     - En tu plantilla de entrada individual (Single Post) o entrada estándar en Elementor, 
+       agrega un widget "HTML".
+     - Pega este código completo en el widget.
+  2. OPCIÓN B (Importar archivo JSON):
+     - Si prefieres importar la plantilla nativa de Elementor, importa el archivo 
+       "elementor-single-post-template.json" en:
+       WordPress Admin > Plantillas > Plantillas Guardadas > Importar Plantillas.
+  3. OPTIMIZACIÓN OPEN GRAPH PARA FACEBOOK E INSTAGRAM (1200x630px):
+     Para que al pegar el enlace en Facebook o al usar el sticker de enlace en Instagram
+     la vista previa se genere con imagen grande y titular llamativo, agrega estas 
+     metaetiquetas en el <head> de tu WordPress (vía Yoast SEO, Rank Math o WPCode):
+
+     <meta property="og:locale" content="es_MX" />
+     <meta property="og:type" content="article" />
+     <meta property="og:site_name" content="Genera Automotriz Hermosillo" />
+     <meta property="og:title" content="5 Señales de que los Frenos de tu Auto Necesitan Cambio Inmediato en Hermosillo" />
+     <meta property="og:description" content="¿Chirrido al frenar o pedal esponjoso? Conoce las alertas críticas del calor extremo en Sonora. Diagnóstico garantizado en Genera Automotriz." />
+     <meta property="og:url" content="https://generaautomotriz.com/blog/senales-cambio-frenos-hermosillo" />
+     <meta property="og:image" content="https://generaautomotriz.com/images/balatas.jpg" />
+     <meta property="og:image:width" content="1200" />
+     <meta property="og:image:height" content="630" />
+     <meta property="article:publisher" content="https://www.facebook.com/GeneraAutomotriz" />
+     <meta property="article:section" content="Frenos y Mecánica" />
+     <meta name="twitter:card" content="summary_large_image" />
+     <meta name="twitter:image" content="https://generaautomotriz.com/images/balatas.jpg" />
+  4. COMPATIBILIDAD TOTAL:
+     - Todas las clases y estilos están encapsulados bajo el contenedor `#ga-elementor-post-root`
+       y tienen el prefijo único `ga-post-`.
+     - No genera ningún conflicto con temas de WordPress (Hello Elementor, Astra, GeneratePress, etc.).
+======================================================================= -->
+
+<!-- Tipografía Plus Jakarta Sans desde Google Fonts CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+<style id="ga-single-post-styles">
+  /* =====================================================================
+     RESET AISLADO Y SCOPED PARA EVITAR CONFLICTOS CON WORDPRESS / ELEMENTOR
+     ===================================================================== */
+  #ga-elementor-post-root,
+  #ga-elementor-post-root * {
+    box-sizing: border-box !important;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  #ga-elementor-post-root {
+    background-color: #07111F;
+    color: #E2E8F0;
+    width: 100%;
+    min-height: 100vh;
+    padding: 32px 16px 80px 16px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  @media (min-width: 768px) {
+    #ga-elementor-post-root {
+      padding: 48px 24px 100px 24px;
+    }
+  }
+
+  /* Barra de progreso de lectura superior */
+  #ga-elementor-post-root .ga-post-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3.5px;
+    background: linear-gradient(90deg, #164B9B, #1769E0, #38BDF8);
+    width: 0%;
+    z-index: 9999999;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(23, 105, 224, 0.7);
+  }
+
+  /* Fondo de luces ambientales */
+  #ga-elementor-post-root .ga-post-glow-1 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    height: 380px;
+    background: radial-gradient(ellipse at top, rgba(23, 105, 224, 0.18), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Contenedor central del artículo */
+  #ga-elementor-post-root .ga-post-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Migas de pan (Breadcrumbs) */
+  #ga-elementor-post-root .ga-post-breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    color: #94A3B8;
+    margin-bottom: 24px;
+  }
+
+  #ga-elementor-post-root .ga-post-breadcrumbs a {
+    color: #94A3B8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  #ga-elementor-post-root .ga-post-breadcrumbs a:hover {
+    color: #38BDF8;
+  }
+
+  #ga-elementor-post-root .ga-post-breadcrumbs span.sep {
+    color: #475569;
+  }
+
+  #ga-elementor-post-root .ga-post-breadcrumbs span.current {
+    color: #CBD5E1;
+    font-weight: 500;
+  }
+
+  /* Encabezado del Post */
+  #ga-elementor-post-root .ga-post-header {
+    margin-bottom: 32px;
+  }
+
+  #ga-elementor-post-root .ga-post-badges {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  #ga-elementor-post-root .ga-post-category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: rgba(23, 105, 224, 0.15);
+    border: 1px solid rgba(23, 105, 224, 0.4);
+    color: #60A5FA;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 9999px;
+  }
+
+  #ga-elementor-post-root .ga-post-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34D399;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 9999px;
+  }
+
+  #ga-elementor-post-root .ga-post-title {
+    font-size: 30px;
+    line-height: 1.25;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-title {
+      font-size: 38px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #ga-elementor-post-root .ga-post-title {
+      font-size: 44px;
+      line-height: 1.2;
+    }
+  }
+
+  /* Metadatos del Post (Autor, Fecha, Tiempo de lectura) */
+  #ga-elementor-post-root .ga-post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 1px solid rgba(51, 65, 85, 0.5);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+  }
+
+  #ga-elementor-post-root .ga-post-author-snippet {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  #ga-elementor-post-root .ga-post-author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    object-fit: cover;
+    border: 2px solid #1769E0;
+    box-shadow: 0 0 12px rgba(23, 105, 224, 0.3);
+  }
+
+  #ga-elementor-post-root .ga-post-author-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #F8FAFC;
+    line-height: 1.3;
+  }
+
+  #ga-elementor-post-root .ga-post-author-role {
+    font-size: 12px;
+    color: #94A3B8;
+  }
+
+  #ga-elementor-post-root .ga-post-date-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: #94A3B8;
+  }
+
+  #ga-elementor-post-root .ga-post-date-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Imagen Destacada (Featured Image) */
+  #ga-elementor-post-root .ga-post-featured-box {
+    margin: 32px 0 40px 0;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    background: #0B1727;
+  }
+
+  #ga-elementor-post-root .ga-post-featured-img {
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  #ga-elementor-post-root .ga-post-featured-box:hover .ga-post-featured-img {
+    transform: scale(1.02);
+  }
+
+  #ga-elementor-post-root .ga-post-featured-caption {
+    padding: 10px 16px;
+    background: rgba(11, 23, 39, 0.95);
+    font-size: 12px;
+    color: #94A3B8;
+    text-align: center;
+    border-top: 1px solid rgba(51, 65, 85, 0.4);
+    font-style: italic;
+  }
+
+  /* Barra de compartir en redes sociales flotante/superior */
+  #ga-elementor-post-root .ga-post-share-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    padding: 14px 20px;
+    border-radius: 14px;
+    margin-bottom: 36px;
+    backdrop-filter: blur(8px);
+  }
+
+  #ga-elementor-post-root .ga-post-share-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #CBD5E1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #ga-elementor-post-root .ga-post-share-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  #ga-elementor-post-root .ga-post-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  #ga-elementor-post-root .ga-post-share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  #ga-elementor-post-root .ga-share-whatsapp {
+    background: #059669;
+    color: #FFFFFF !important;
+  }
+  #ga-elementor-post-root .ga-share-whatsapp:hover {
+    background: #10B981;
+  }
+
+  #ga-elementor-post-root .ga-share-facebook {
+    background: #1877F2;
+    color: #FFFFFF !important;
+  }
+  #ga-elementor-post-root .ga-share-facebook:hover {
+    background: #2563EB;
+  }
+
+  #ga-elementor-post-root .ga-share-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #FFFFFF !important;
+  }
+  #ga-elementor-post-root .ga-share-instagram:hover {
+    filter: brightness(1.15);
+  }
+
+  #ga-elementor-post-root .ga-share-x {
+    background: #1E293B;
+    border: 1px solid #475569;
+    color: #F8FAFC !important;
+  }
+  #ga-elementor-post-root .ga-share-x:hover {
+    background: #334155;
+  }
+
+  #ga-elementor-post-root .ga-share-copy {
+    background: #1769E0;
+    color: #FFFFFF !important;
+  }
+  #ga-elementor-post-root .ga-share-copy:hover {
+    background: #2563EB;
+  }
+
+  /* Modal de Compartir en Instagram / Redes Sociales */
+  #ga-elementor-post-root .ga-ig-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 9, 20, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  #ga-elementor-post-root .ga-ig-modal-overlay.ga-active {
+    display: flex;
+    opacity: 1;
+  }
+
+  #ga-elementor-post-root .ga-ig-modal-dialog {
+    background: #0B1727;
+    border: 1px solid rgba(23, 105, 224, 0.4);
+    border-radius: 20px;
+    max-width: 520px;
+    width: 100%;
+    padding: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  #ga-elementor-post-root .ga-ig-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+  }
+
+  #ga-elementor-post-root .ga-ig-modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #ga-elementor-post-root .ga-ig-modal-close {
+    background: rgba(30, 41, 59, 0.8);
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #ga-elementor-post-root .ga-ig-modal-close:hover {
+    color: #FFFFFF;
+    background: #334155;
+  }
+
+  #ga-elementor-post-root .ga-ig-caption-box {
+    background: #050B14;
+    border: 1px solid rgba(51, 65, 85, 0.8);
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #E2E8F0;
+    max-height: 190px;
+    overflow-y: auto;
+    font-family: inherit;
+    white-space: pre-wrap;
+    margin-bottom: 16px;
+  }
+
+  #ga-elementor-post-root .ga-social-community-box {
+    margin-top: 48px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(7, 17, 31, 0.95));
+    border: 1px solid rgba(23, 105, 224, 0.35);
+    border-radius: 20px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+  }
+
+  #ga-elementor-post-root .ga-social-community-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  /* Tabla de Contenidos (Table of Contents) */
+  #ga-elementor-post-root .ga-post-toc-box {
+    background: rgba(11, 23, 39, 0.85);
+    border: 1px solid rgba(23, 105, 224, 0.35);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 40px;
+    position: relative;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+  }
+
+  #ga-elementor-post-root .ga-post-toc-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #60A5FA;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  #ga-elementor-post-root .ga-post-toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #ga-elementor-post-root .ga-post-toc-item a {
+    color: #CBD5E1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+
+  #ga-elementor-post-root .ga-post-toc-item a:hover {
+    color: #38BDF8;
+    transform: translateX(4px);
+  }
+
+  #ga-elementor-post-root .ga-post-toc-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(23, 105, 224, 0.2);
+    color: #60A5FA;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 6px;
+  }
+
+  /* =====================================================================
+     CUERPO DEL ARTÍCULO (ESTILOS TIPOGRÁFICOS COMPLETOS)
+     ===================================================================== */
+  #ga-elementor-post-root .ga-post-content {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #CBD5E1;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-content {
+      font-size: 17px;
+      line-height: 1.85;
+    }
+  }
+
+  #ga-elementor-post-root .ga-post-content p {
+    margin-bottom: 22px;
+  }
+
+  #ga-elementor-post-root .ga-post-content .ga-post-lead {
+    font-size: 19px;
+    line-height: 1.7;
+    color: #F1F5F9;
+    font-weight: 500;
+    margin-bottom: 28px;
+    border-left: 3.5px solid #1769E0;
+    padding-left: 18px;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-content .ga-post-lead {
+      font-size: 21px;
+    }
+  }
+
+  #ga-elementor-post-root .ga-post-content h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 44px 0 18px 0;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-content h2 {
+      font-size: 28px;
+    }
+  }
+
+  #ga-elementor-post-root .ga-post-content h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #93C5FD;
+    margin: 32px 0 14px 0;
+    line-height: 1.35;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-content h3 {
+      font-size: 21px;
+    }
+  }
+
+  #ga-elementor-post-root .ga-post-content strong {
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  #ga-elementor-post-root .ga-post-content a {
+    color: #38BDF8;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+  }
+
+  #ga-elementor-post-root .ga-post-content a:hover {
+    color: #60A5FA;
+  }
+
+  #ga-elementor-post-root .ga-post-content ul,
+  #ga-elementor-post-root .ga-post-content ol {
+    margin: 0 0 24px 20px;
+    padding: 0;
+  }
+
+  #ga-elementor-post-root .ga-post-content li {
+    margin-bottom: 10px;
+    padding-left: 6px;
+  }
+
+  /* Caja de advertencia / Seguridad mecánica */
+  #ga-elementor-post-root .ga-post-callout-warning {
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-left: 4px solid #EF4444;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 32px 0;
+  }
+
+  #ga-elementor-post-root .ga-post-callout-warning-title {
+    color: #F87171;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  #ga-elementor-post-root .ga-post-callout-warning p {
+    margin-bottom: 0;
+    color: #FCA5A5;
+    font-size: 14.5px;
+  }
+
+  /* Caja de consejo pro de Genera Automotriz */
+  #ga-elementor-post-root .ga-post-callout-tip {
+    background: rgba(23, 105, 224, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    border-left: 4px solid #1769E0;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 32px 0;
+  }
+
+  #ga-elementor-post-root .ga-post-callout-tip-title {
+    color: #60A5FA;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  #ga-elementor-post-root .ga-post-callout-tip p {
+    margin-bottom: 0;
+    color: #BFDBFE;
+    font-size: 14.5px;
+  }
+
+  /* Cita destacada (Blockquote) */
+  #ga-elementor-post-root .ga-post-quote {
+    margin: 36px 0;
+    padding: 24px 28px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(11, 23, 39, 0.7));
+    border: 1px solid rgba(51, 65, 85, 0.7);
+    border-radius: 14px;
+    position: relative;
+    font-style: italic;
+    color: #E2E8F0;
+    font-size: 17px;
+  }
+
+  #ga-elementor-post-root .ga-post-quote-author {
+    margin-top: 12px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 700;
+    color: #38BDF8;
+    text-align: right;
+  }
+
+  /* Banner CTA Interactivo de WhatsApp en el Artículo */
+  #ga-elementor-post-root .ga-post-cta-banner {
+    background: linear-gradient(135deg, #0A1C36 0%, #0F2A52 100%);
+    border: 1.5px solid #1769E0;
+    border-radius: 18px;
+    padding: 28px 24px;
+    margin: 48px 0;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 40px -10px rgba(23, 105, 224, 0.25);
+    overflow: hidden;
+  }
+
+  #ga-elementor-post-root .ga-post-cta-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(23, 105, 224, 0.15), transparent 60%);
+    pointer-events: none;
+  }
+
+  #ga-elementor-post-root .ga-post-cta-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-cta-title {
+      font-size: 26px;
+    }
+  }
+
+  #ga-elementor-post-root .ga-post-cta-desc {
+    font-size: 15px;
+    color: #CBD5E1;
+    max-width: 580px;
+    margin: 0 auto 22px auto;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  #ga-elementor-post-root .ga-post-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #059669;
+    color: #FFFFFF !important;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 9999px;
+    text-decoration: none !important;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 25px rgba(5, 150, 105, 0.4);
+    position: relative;
+    z-index: 2;
+  }
+
+  #ga-elementor-post-root .ga-post-cta-button:hover {
+    background: #10B981;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(16, 185, 129, 0.5);
+  }
+
+  #ga-elementor-post-root .ga-post-cta-subtext {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #94A3B8;
+    position: relative;
+  }
+
+  /* Tarjeta de Biografía del Autor */
+  #ga-elementor-post-root .ga-post-author-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 48px 0;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-author-box {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  #ga-elementor-post-root .ga-post-author-big-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 9999px;
+    object-fit: cover;
+    border: 2px solid #1769E0;
+    box-shadow: 0 0 16px rgba(23, 105, 224, 0.35);
+    flex-shrink: 0;
+  }
+
+  #ga-elementor-post-root .ga-post-author-info {
+    flex: 1;
+  }
+
+  #ga-elementor-post-root .ga-post-author-box-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+  }
+
+  #ga-elementor-post-root .ga-post-author-box-credentials {
+    font-size: 13px;
+    color: #38BDF8;
+    margin-bottom: 10px;
+  }
+
+  #ga-elementor-post-root .ga-post-author-box-bio {
+    font-size: 14px;
+    color: #94A3B8;
+    line-height: 1.6;
+  }
+
+  /* Sección de Artículos Relacionados (Related Posts) */
+  #ga-elementor-post-root .ga-post-related-section {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(51, 65, 85, 0.5);
+  }
+
+  #ga-elementor-post-root .ga-post-related-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  #ga-elementor-post-root .ga-post-related-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+
+  #ga-elementor-post-root .ga-post-related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-post-root .ga-post-related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #ga-elementor-post-root .ga-post-related-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  #ga-elementor-post-root .ga-post-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+  }
+
+  #ga-elementor-post-root .ga-post-card:hover {
+    transform: translateY(-4px);
+    border-color: #1769E0;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  #ga-elementor-post-root .ga-post-card-thumb {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+
+  #ga-elementor-post-root .ga-post-card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  #ga-elementor-post-root .ga-post-card-category {
+    font-size: 11px;
+    font-weight: 700;
+    color: #60A5FA;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  #ga-elementor-post-root .ga-post-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #F8FAFC;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    flex: 1;
+  }
+
+  #ga-elementor-post-root .ga-post-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #94A3B8;
+    padding-top: 10px;
+    border-top: 1px solid rgba(51, 65, 85, 0.4);
+  }
+
+  /* Toast de copiado de enlace */
+  #ga-elementor-post-root .ga-post-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #059669;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 9999999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  #ga-elementor-post-root .ga-post-toast.ga-show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div id="ga-elementor-post-root">
+  <!-- Barra de progreso de lectura (Se actualiza con el scroll) -->
+  <div class="ga-post-progress-bar" id="gaPostProgressBar"></div>
+
+  <!-- Efecto de luz superior -->
+  <div class="ga-post-glow-1"></div>
+
+  <div class="ga-post-wrapper">
+    <!-- Migas de pan (Breadcrumbs) -->
+    <nav class="ga-post-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Inicio</a>
+      <span class="sep">/</span>
+      <a href="/blog">Blog</a>
+      <span class="sep">/</span>
+      <a href="/blog/frenos-y-mecanica">Frenos y Mecánica</a>
+      <span class="sep">/</span>
+      <!-- Etiqueta dinámica de WordPress: [the_title] -->
+      <span class="current">5 Señales de que los Frenos de tu Auto Necesitan Cambio Inmediato</span>
+    </nav>
+
+    <!-- Encabezado del Post -->
+    <header class="ga-post-header">
+      <div class="ga-post-badges">
+        <span class="ga-post-category-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Mantenimiento Preventivo
+        </span>
+        <span class="ga-post-verified-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Revisión Técnica Garantizada
+        </span>
+      </div>
+
+      <!-- TÍTULO DINÁMICO DEL POST (Reemplazable con Elementor Post Title) -->
+      <h1 class="ga-post-title">
+        5 Señales de que los Frenos de tu Auto Necesitan Cambio Inmediato en Hermosillo
+      </h1>
+
+      <!-- METADATOS DEL POST -->
+      <div class="ga-post-meta">
+        <div class="ga-post-author-snippet">
+          <img 
+            src="/images/mecanico01.jpg" 
+            alt="Mecánico Certificado Genera Automotriz" 
+            class="ga-post-author-avatar"
+            onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=150&q=80'"
+          />
+          <div>
+            <div class="ga-post-author-name">Equipo Técnico Genera</div>
+            <div class="ga-post-author-role">Especialistas en Diagnóstico y Frenos · Hermosillo, Son.</div>
+          </div>
+        </div>
+
+        <div class="ga-post-date-group">
+          <div class="ga-post-date-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Octubre 2024</span>
+          </div>
+          <div class="ga-post-date-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>5 min de lectura</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- IMAGEN DESTACADA (FEATURED IMAGE) -->
+    <div class="ga-post-featured-box">
+      <img 
+        src="/images/balatas.jpg" 
+        alt="Revisión de balatas y sistema de frenos en Genera Automotriz Hermosillo" 
+        class="ga-post-featured-img"
+        onerror="this.src='https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1200&q=80'"
+      />
+      <div class="ga-post-featured-caption">
+        Inspección minuciosa del grosor de balatas y rectificado de discos en nuestro taller en Hermosillo.
+      </div>
+    </div>
+
+    <!-- BARRA DE COMPARTIR OPTIMIZADA (WHATSAPP, FACEBOOK, INSTAGRAM) -->
+    <div class="ga-post-share-card">
+      <div class="ga-post-share-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        Compartir esta guía:
+      </div>
+      <div class="ga-post-share-buttons">
+        <button type="button" class="ga-post-share-btn ga-share-whatsapp" onclick="gaShareWhatsApp()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          WhatsApp
+        </button>
+        <button type="button" class="ga-post-share-btn ga-share-facebook" onclick="gaShareFacebook()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          Facebook
+        </button>
+        <button type="button" class="ga-post-share-btn ga-share-instagram" onclick="gaOpenInstagramModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          Instagram (Copy & Historia)
+        </button>
+        <button type="button" class="ga-post-share-btn ga-share-copy" onclick="gaCopyPostLink()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          Copiar Enlace
+        </button>
+      </div>
+    </div>
+
+    <!-- TABLA DE CONTENIDOS -->
+    <div class="ga-post-toc-box">
+      <div class="ga-post-toc-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        Contenido de esta guía
+      </div>
+      <ul class="ga-post-toc-list">
+        <li class="ga-post-toc-item">
+          <a href="#senial-1"><span class="ga-post-toc-num">1</span> Chirrido metálico agudo al pisar el pedal</a>
+        </li>
+        <li class="ga-post-toc-item">
+          <a href="#senial-2"><span class="ga-post-toc-num">2</span> El pedal se siente esponjoso o se va hasta el fondo</a>
+        </li>
+        <li class="ga-post-toc-item">
+          <a href="#senial-3"><span class="ga-post-toc-num">3</span> Vibración en el volante al frenar a más de 60 km/h</a>
+        </li>
+        <li class="ga-post-toc-item">
+          <a href="#senial-4"><span class="ga-post-toc-num">4</span> El auto se jala hacia un lado al frenar</a>
+        </li>
+        <li class="ga-post-toc-item">
+          <a href="#senial-5"><span class="ga-post-toc-num">5</span> Olor a quemado después de conducir en calor extremo</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- =================================================================
+         CONTENIDO PRINCIPAL DEL POST (the_content() en WordPress)
+         ================================================================= -->
+    <article class="ga-post-content">
+      <p class="ga-post-lead">
+        El calor extremo de Hermosillo y el tráfico diario someten al sistema de frenos a temperaturas superiores a los 300°C. Ignorar un sonido o cambio en el pedal puede convertir una simple reposición de balatas en un costoso reemplazo de discos o calipers.
+      </p>
+
+      <p>
+        En <strong>Genera Automotriz</strong> creemos firmemente en nuestra regla de oro: <em>"Primero diagnosticamos, tú autorizas y después reparamos"</em>. Antes de gastar en refacciones innecesarias, te explicamos cómo identificar con precisión qué le ocurre a tu vehículo.
+      </p>
+
+      <h2 id="senial-1">
+        1. Chirrido metálico agudo al pisar el pedal
+      </h2>
+      <p>
+        La mayoría de las balatas modernas cuentan con una pequeña lámina metálica llamada testigo de desgaste. Cuando la pasta de fricción llega a menos de 3 milímetros de espesor, este testigo roza contra el disco para avisarte acústicamente que ha llegado el momento de cambiarlas.
+      </p>
+
+      <div class="ga-post-callout-warning">
+        <div class="ga-post-callout-warning-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          ¡Atención Inmediata!
+        </div>
+        <p>
+          Si el chirrido se transforma en un rechinido áspero y crujiente ("metal contra metal"), la balata se ha desgastado por completo y el soporte de hierro está destruyendo la superficie de tu disco de freno.
+        </p>
+      </div>
+
+      <h2 id="senial-2">
+        2. El pedal se siente esponjoso o se va hasta el fondo
+      </h2>
+      <p>
+        Al pisar el freno, la respuesta debe ser firme e inmediata. Si sientes que el pedal baja más de lo normal o da una sensación de "esponja", generalmente significa:
+      </p>
+      <ul>
+        <li>Presencia de burbujas de aire en las líneas hidráulicas.</li>
+        <li>Líquido de frenos degradado con humedad acumulada por condensación.</li>
+        <li>Fuga en cilindro maestro o mangueras de freno.</li>
+      </ul>
+
+      <div class="ga-post-callout-tip">
+        <div class="ga-post-callout-tip-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Consejo de Taller Genera
+        </div>
+        <p>
+          En Hermosillo recomendamos cambiar el líquido de frenos (DOT 3 o DOT 4 según el fabricante) cada 2 años o 40,000 km, ya que el líquido absorbe humedad ambiental y pierde su punto de ebullición.
+        </p>
+      </div>
+
+      <h2 id="senial-3">
+        3. Vibración en el volante al frenar a más de 60 km/h
+      </h2>
+      <p>
+        Si vas circulando por el Periférico Norte o Blvd. Solidaridad y al frenar notas que el volante tiembla con fuerza, es un síntoma clásico de <strong>discos alabeados (ondulados)</strong>.
+      </p>
+      <p>
+        El cambio brusco de temperatura (por ejemplo, pasar por un charco profundo con los frenos al rojo vivo) provoca deformaciones microscópicas en el acero. En nuestro taller realizamos rectificado computarizado con precisión micrométrica para devolverle una superficie 100% plana.
+      </p>
+
+      <blockquote class="ga-post-quote">
+        "Un sistema de frenos en buen estado no solo evita colisiones; reduce la distancia de frenado de emergencia hasta en un 40% en pavimento caliente."
+        <div class="ga-post-quote-author">— Ing. Mecánico, Genera Automotriz Hermosillo</div>
+      </blockquote>
+
+      <h2 id="senial-4">
+        4. El auto se jala hacia un lado al frenar
+      </h2>
+      <p>
+        Cuando el vehículo tiende a desviarse hacia el carril izquierdo o derecho al aplicar los frenos, suele deberse a un émbolo de mordaza (caliper) atascado, un desgaste desigual de pastillas o problemas en la alineación y suspensión delantera.
+      </p>
+
+      <h2 id="senial-5">
+        5. Olor a quemado después de conducir en tráfico pesado
+      </h2>
+      <p>
+        Un olor acre y picante proveniente de las ruedas indica un recalentamiento severo del material de fricción. Esto sucede a menudo cuando el freno de mano se quedó parcialmente enganchado o cuando un caliper no libera la presión tras soltar el pedal.
+      </p>
+
+      <!-- BANNER CTA DE WHATSAPP DIRECTO -->
+      <div class="ga-post-cta-banner">
+        <div class="ga-post-cta-glow"></div>
+        <h3 class="ga-post-cta-title">¿Tu auto presenta alguno de estos síntomas?</h3>
+        <p class="ga-post-cta-desc">
+          No te arriesgues en el tráfico de Sonora. Trae tu auto a Genera Automotriz para una inspección visual de frenos y diagnóstico computarizado sin sorpresas.
+        </p>
+        <a href="https://wa.me/526624330056?text=Hola%20Genera%20Automotriz,%20leí%20su%20guía%20de%20frenos%20y%20quiero%20agendar%20una%20revisión" target="_blank" rel="noopener" class="ga-post-cta-button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Agendar Cita por WhatsApp (662 433 0056)
+        </a>
+        <div class="ga-post-cta-subtext">
+          Hermosillo, Sonora · Diagnóstico claro y presupuesto autorizado por ti antes de cualquier trabajo.
+        </div>
+      </div>
+    </article>
+
+    <!-- CAJA DE AUTOR -->
+    <div class="ga-post-author-box">
+      <img 
+        src="/images/mecanico02.jpg" 
+        alt="Ingeniero en Jefe Genera Automotriz" 
+        class="ga-post-author-big-avatar"
+        onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=200&q=80'"
+      />
+      <div class="ga-post-author-info">
+        <h4 class="ga-post-author-box-name">Equipo de Especialistas de Genera Automotriz</h4>
+        <div class="ga-post-author-box-credentials">Certificados en Diagnóstico Electrónico, Frenos ABS y Suspensión Automotriz</div>
+        <p class="ga-post-author-box-bio">
+          En Genera Automotriz nos apasiona cuidar tu seguridad y la de tu familia. Respaldados por marcas líderes como PEISA y tecnología de escaneo Launch X431 Pro, brindamos servicio automotriz de alta gama en Hermosillo con total transparencia.
+        </p>
+      </div>
+    </div>
+
+    <!-- CAJA DE COMUNIDAD Y REDES SOCIALES (FACEBOOK & INSTAGRAM) -->
+    <div class="ga-social-community-box">
+      <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#60A5FA;">
+        Comunidad Genera Automotriz
+      </div>
+      <h3 style="font-size:20px; font-weight:800; color:#FFFFFF; margin:0;">
+        ¿Te sirvió esta guía? Síguenos en Redes Sociales
+      </h3>
+      <p style="font-size:14px; color:#94A3B8; max-width:560px; margin:0; line-height:1.6;">
+        Compartimos tips mecánicos semanales para sobrevivir al calor extremo de Sonora, consejos de mantenimiento preventivo y promociones exclusivas en Hermosillo.
+      </p>
+      <div class="ga-social-community-buttons">
+        <a href="https://www.facebook.com/GeneraAutomotriz" target="_blank" rel="noopener" class="ga-post-share-btn ga-share-facebook" style="padding:10px 20px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          Seguir en Facebook
+        </a>
+        <a href="https://www.instagram.com/generaautomotriz/" target="_blank" rel="noopener" class="ga-post-share-btn ga-share-instagram" style="padding:10px 20px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          Seguir en Instagram
+        </a>
+        <a href="https://wa.me/526624330056?text=Hola%20Genera%20Automotriz,%20le%C3%AD%20su%20gu%C3%ADa%20de%20frenos%20y%20quiero%20agendar%20diagn%C3%B3stico" target="_blank" rel="noopener" class="ga-post-share-btn ga-share-whatsapp" style="padding:10px 20px; font-size:13px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          WhatsApp Taller
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTÍCULOS RELACIONADOS -->
+    <section class="ga-post-related-section">
+      <div class="ga-post-related-header">
+        <h3 class="ga-post-related-title">Artículos Relacionados</h3>
+        <a href="/blog" style="color:#60A5FA; font-size:13px; font-weight:600; text-decoration:none;">Ver todo el blog →</a>
+      </div>
+
+      <div class="ga-post-related-grid">
+        <!-- Card 1 -->
+        <a href="#post-1" class="ga-post-card">
+          <img src="/images/genera-diagnostico.jpg" alt="Diagnóstico Computarizado" class="ga-post-card-thumb" onerror="this.src='/images/genera-hero-taller.jpg'" />
+          <div class="ga-post-card-body">
+            <span class="ga-post-card-category">Diagnóstico Electrónico</span>
+            <h4 class="ga-post-card-title">¿Qué significa la luz Check Engine y cuándo es peligroso ignorarla?</h4>
+            <div class="ga-post-card-footer">
+              <span>Lectura 4 min</span>
+              <span style="color:#38BDF8;">Leer →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="#post-2" class="ga-post-card">
+          <img src="/images/genera-suspension.jpg" alt="Suspensión en Hermosillo" class="ga-post-card-thumb" onerror="this.src='/images/genera-mecanico.jpg'" />
+          <div class="ga-post-card-body">
+            <span class="ga-post-card-category">Suspensión</span>
+            <h4 class="ga-post-card-title">Cómo proteger los amortiguadores de tu auto en las calles de Sonora</h4>
+            <div class="ga-post-card-footer">
+              <span>Lectura 6 min</span>
+              <span style="color:#38BDF8;">Leer →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="#post-3" class="ga-post-card">
+          <img src="/images/genera-electrico.jpg" alt="Sistema Eléctrico y Batería" class="ga-post-card-thumb" onerror="this.src='/images/genera-motor.jpg'" />
+          <div class="ga-post-card-body">
+            <span class="ga-post-card-category">Sistema Eléctrico</span>
+            <h4 class="ga-post-card-title">Batería descargada por el calor: síntomas y cuidados indispensables</h4>
+            <div class="ga-post-card-footer">
+              <span>Lectura 5 min</span>
+              <span style="color:#38BDF8;">Leer →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL DE COMPARTIR EN INSTAGRAM -->
+  <div class="ga-ig-modal-overlay" id="gaInstagramModal" onclick="if(event.target===this) gaCloseInstagramModal()">
+    <div class="ga-ig-modal-dialog">
+      <div class="ga-ig-modal-header">
+        <div class="ga-ig-modal-title">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:8px; background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </span>
+          Compartir en Instagram & Historias
+        </div>
+        <button type="button" class="ga-ig-modal-close" onclick="gaCloseInstagramModal()" aria-label="Cerrar modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <p style="font-size:13px; color:#94A3B8; margin-bottom:12px; line-height:1.5;">
+        Para compartir en tu <strong>perfil de Instagram</strong> o en una <strong>Historia con sticker de enlace</strong>, copia este texto preformateado con ganchos, puntos clave y hashtags locales de Sonora:
+      </p>
+
+      <div style="font-size:11px; font-weight:700; color:#60A5FA; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px;">
+        Texto con formato y hashtags optimizados:
+      </div>
+
+      <div class="ga-ig-caption-box" id="gaInstagramCaptionText">¿Chirrido agudo al frenar o pedal esponjoso en Hermosillo? 🚨🔥
+
+Con el calor extremo de Sonora superando los 45°C, las balatas y discos sufren desgaste acelerado. Aquí tienes 3 señales críticas de alerta:
+
+1️⃣ Chirrido metálico constante (el testigo acústico avisa balatas desgastadas).
+2️⃣ Pedal que se hunde o se siente esponjoso (humedad o aire en líquido de frenos).
+3️⃣ Vibración en el volante al frenar en bulevares principales.
+
+🛡️ En Genera Automotriz primero diagnosticamos, tú autorizas y después reparamos.
+
+👉 Lee la guía completa en el enlace de nuestra biografía o agenda tu diagnóstico por WhatsApp al 662 433 0056.
+
+#Hermosillo #Sonora #MecanicaHermosillo #TallerMecanico #GeneraAutomotriz #FrenosSeguros #AutosHermosillo #MantenimientoAutomotriz</div>
+
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <button type="button" onclick="gaCopyInstagramCaption()" class="ga-post-share-btn ga-share-instagram" style="width:100%; padding:11px; font-size:13px; border-radius:10px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+          Copiar Texto y Hashtags para Instagram
+        </button>
+
+        <a href="https://www.instagram.com" target="_blank" rel="noopener" class="ga-post-share-btn" style="width:100%; padding:10px; font-size:13px; background:#1E293B; color:#CBD5E1; border:1px solid #334155; border-radius:10px; text-align:center;">
+          Abrir Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificación Toast de copiado al portapapeles -->
+  <div class="ga-post-toast" id="gaPostToast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="gaPostToastMsg">¡Enlace copiado al portapapeles!</span>
+  </div>
+</div>
+
+<script>
+  // Barra de progreso de lectura interactiva
+  window.addEventListener('scroll', function() {
+    const postEl = document.getElementById('ga-elementor-post-root');
+    const bar = document.getElementById('gaPostProgressBar');
+    if (!postEl || !bar) return;
+
+    const totalHeight = postEl.offsetHeight - window.innerHeight;
+    if (totalHeight <= 0) {
+      bar.style.width = '100%';
+      return;
+    }
+    const scrolled = Math.max(0, window.scrollY - postEl.offsetTop);
+    const progress = Math.min(100, Math.max(0, (scrolled / totalHeight) * 100));
+    bar.style.width = progress + '%';
+  });
+
+  // Compartir en WhatsApp con texto precargado
+  function gaShareWhatsApp() {
+    const title = encodeURIComponent("5 Señales de que los Frenos Necesitan Cambio Inmediato - Genera Automotriz Hermosillo");
+    const url = encodeURIComponent(window.location.href);
+    window.open("https://api.whatsapp.com/send?text=" + title + "%20" + url, "_blank");
+  }
+
+  // Compartir en Facebook con ventana emergente
+  function gaShareFacebook() {
+    const url = encodeURIComponent(window.location.href);
+    const fbShareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + url;
+    window.open(fbShareUrl, "fbShareWindow", "height=450,width=650,top=100,left=100,toolbar=0,location=0,menubar=0,directories=0,scrollbars=0");
+  }
+
+  // Modal de Instagram
+  function gaOpenInstagramModal() {
+    const modal = document.getElementById('gaInstagramModal');
+    if (modal) modal.classList.add('ga-active');
+  }
+
+  function gaCloseInstagramModal() {
+    const modal = document.getElementById('gaInstagramModal');
+    if (modal) modal.classList.remove('ga-active');
+  }
+
+  function gaCopyInstagramCaption() {
+    const captionEl = document.getElementById('gaInstagramCaptionText');
+    if (!captionEl) return;
+    const text = captionEl.innerText || captionEl.textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        gaShowToast("¡Texto de Instagram copiado al portapapeles!");
+      }).catch(function() {
+        gaFallbackCopy(text);
+        gaShowToast("¡Texto de Instagram copiado!");
+      });
+    } else {
+      gaFallbackCopy(text);
+      gaShowToast("¡Texto de Instagram copiado!");
+    }
+  }
+
+  // Función para copiar enlace al portapapeles
+  function gaCopyPostLink() {
+    const currentUrl = window.location.href;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(currentUrl).then(function() {
+        gaShowToast("¡Enlace copiado al portapapeles!");
+      }).catch(function() {
+        gaFallbackCopy(currentUrl);
+        gaShowToast("¡Enlace copiado!");
+      });
+    } else {
+      gaFallbackCopy(currentUrl);
+      gaShowToast("¡Enlace copiado!");
+    }
+  }
+
+  function gaFallbackCopy(text) {
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+  }
+
+  function gaShowToast(message) {
+    const toast = document.getElementById('gaPostToast');
+    const msgEl = document.getElementById('gaPostToastMsg');
+    if (!toast) return;
+    if (msgEl && message) msgEl.textContent = message;
+    toast.classList.add('ga-show');
+    setTimeout(function() {
+      toast.classList.remove('ga-show');
+    }, 2800);
+  }
+</script>

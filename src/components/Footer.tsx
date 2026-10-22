@@ -23,7 +23,8 @@ export const Footer: React.FC = () => {
     { label: 'Servicios', href: '#servicios' },
     { label: 'Reseñas de Clientes', href: '#resenas' },
     { label: 'Ubicación y Mapa', href: '#ubicacion' },
-    { label: 'Contacto', href: '#contacto' }
+    { label: 'Contacto', href: '#contacto' },
+    { label: 'Plantilla Blog (Elementor)', href: '#blog-template' }
   ];
 
   return (

@@ -1,0 +1,975 @@
+<!-- =======================================================================
+  GENERA AUTOMOTRIZ - HEADER PROFESIONAL PARA ELEMENTOR (WORDPRESS)
+  =======================================================================
+  Instrucciones de uso en WordPress / Elementor:
+  1. En tu página de Elementor (o plantilla de Header / Theme Builder), añade un widget "HTML".
+  2. Copia todo el contenido de este archivo y pégalo dentro del campo de código HTML del widget.
+  3. ¡Listo! El código es 100% autocontenido, no requiere plugins adicionales ni Tailwind.
+  4. Si subes tu propio logotipo a la biblioteca de medios de WordPress, reemplaza la URL
+     marcada con: "REEMPLAZAR_CON_URL_DEL_LOGO_EN_WORDPRESS" (líneas 119 y 207).
+  5. Todas las clases tienen el prefijo único "ga-hdr-" para evitar cualquier conflicto con
+     temas como Astra, Hello Elementor, OceanWP o plugins de WordPress.
+======================================================================= -->
+
+<!-- Tipografía Plus Jakarta Sans desde Google Fonts CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style id="ga-header-styles">
+  /* =====================================================================
+     RESET AISLADO Y SCOPED PARA EVITAR CONFLICTOS CON WORDPRESS / ELEMENTOR
+     ===================================================================== */
+  #ga-elementor-header-root,
+  #ga-elementor-header-root * {
+    box-sizing: border-box !important;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    line-height: normal;
+  }
+
+  #ga-elementor-header-root a {
+    text-decoration: none !important;
+    color: inherit;
+    display: inline-flex;
+    transition: all 0.2s ease;
+  }
+
+  #ga-elementor-header-root button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    outline: none;
+    padding: 0;
+  }
+
+  #ga-elementor-header-root svg {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* =====================================================================
+     HEADER PRINCIPAL (FIJO Y RESPONSIVO)
+     ===================================================================== */
+  #ga-elementor-header-root .ga-hdr-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 999999;
+    padding: 14px 16px;
+    background: linear-gradient(to bottom, rgba(5, 12, 23, 0.95), rgba(7, 17, 31, 0.7), transparent);
+    transition: background 0.3s ease, padding 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-bar {
+      padding: 18px 24px;
+    }
+  }
+
+  /* Estado cuando el usuario hace Scroll */
+  #ga-elementor-header-root .ga-hdr-bar.ga-is-scrolled {
+    background: rgba(7, 17, 31, 0.95) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.6) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+    padding: 10px 16px !important;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-bar.ga-is-scrolled {
+      padding: 12px 24px !important;
+    }
+  }
+
+  /* Línea láser azul sutil superior en scroll */
+  #ga-elementor-header-root .ga-hdr-laser-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, #1769E0, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  #ga-elementor-header-root .ga-hdr-bar.ga-is-scrolled .ga-hdr-laser-line {
+    opacity: 0.85;
+  }
+
+  /* Contenedor central alineado */
+  #ga-elementor-header-root .ga-hdr-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    position: relative;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-container {
+      gap: 16px;
+    }
+  }
+
+  /* =====================================================================
+     ZONA 1: LOGOTIPO DE GENERA AUTOMOTRIZ
+     ===================================================================== */
+  #ga-elementor-header-root .ga-hdr-brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  #ga-elementor-header-root .ga-hdr-brand:hover {
+    transform: scale(1.02);
+  }
+
+  #ga-elementor-header-root .ga-hdr-brand:active {
+    transform: scale(0.99);
+  }
+
+  #ga-elementor-header-root .ga-hdr-logo-img {
+    height: 67px !important;
+    width: 160.17px !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  @media (max-width: 480px) {
+    #ga-elementor-header-root .ga-hdr-logo-img {
+      height: 52px !important;
+      width: 124px !important;
+    }
+  }
+
+  /* =====================================================================
+     ZONA 2: MENÚ DE NAVEGACIÓN DESKTOP (PILLS)
+     ===================================================================== */
+  #ga-elementor-header-root .ga-hdr-nav-desktop {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 6px;
+    border-radius: 9999px;
+    border: 1px solid rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  @media (min-width: 1024px) {
+    #ga-elementor-header-root .ga-hdr-nav-desktop {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    #ga-elementor-header-root .ga-hdr-nav-desktop {
+      gap: 8px;
+    }
+  }
+
+  #ga-elementor-header-root .ga-hdr-nav-link {
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #cbd5e1 !important;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+
+  @media (min-width: 1280px) {
+    #ga-elementor-header-root .ga-hdr-nav-link {
+      font-size: 14px;
+    }
+  }
+
+  #ga-elementor-header-root .ga-hdr-nav-link:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  #ga-elementor-header-root .ga-hdr-nav-link.ga-active {
+    color: #ffffff !important;
+    background: rgba(22, 75, 155, 0.6) !important;
+    box-shadow: 0 0 12px rgba(23, 105, 224, 0.4) !important;
+    border: 1px solid rgba(23, 105, 224, 0.4) !important;
+  }
+
+  /* =====================================================================
+     ZONA 3: ACCIONES & REDES SOCIALES
+     ===================================================================== */
+  #ga-elementor-header-root .ga-hdr-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-actions {
+      gap: 10px;
+    }
+  }
+
+  #ga-elementor-header-root .ga-hdr-social-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-social-group {
+      gap: 8px;
+    }
+  }
+
+  /* Botón Facebook */
+  #ga-elementor-header-root .ga-hdr-btn-fb {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #1877F2 !important;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 6px -1px rgba(24, 119, 242, 0.35);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-btn-fb {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-fb:hover {
+    background: #166fe5 !important;
+    box-shadow: 0 8px 16px -2px rgba(24, 119, 242, 0.55);
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-fb:active {
+    transform: scale(0.95);
+  }
+
+  /* Botón Instagram */
+  #ga-elementor-header-root .ga-hdr-btn-ig {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF) !important;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 6px -1px rgba(221, 42, 123, 0.35);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-btn-ig {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-ig:hover {
+    opacity: 0.95;
+    box-shadow: 0 8px 16px -2px rgba(221, 42, 123, 0.55);
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-ig:active {
+    transform: scale(0.95);
+  }
+
+  /* Botón Primario "AGENDA TU CITA" (Oculto en móvil < 640px según la regla de la app) */
+  #ga-elementor-header-root .ga-hdr-btn-cta {
+    position: relative;
+    overflow: hidden;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #ffffff !important;
+    background: linear-gradient(90deg, #164B9B, #1769E0, #2563EB) !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(22, 75, 155, 0.38);
+    border: 1px solid rgba(147, 197, 253, 0.25);
+    white-space: nowrap;
+    min-height: 40px;
+    transition: all 0.25s ease;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-btn-cta {
+      display: inline-flex;
+    }
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-cta:hover {
+    background: linear-gradient(90deg, #1769E0, #1D4ED8, #2563EB) !important;
+    box-shadow: 0 12px 20px -2px rgba(23, 105, 224, 0.55);
+    transform: translateY(-1px);
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-cta:active {
+    transform: scale(0.98);
+  }
+
+  /* Efecto de Brillo / Sheen en Hover */
+  #ga-elementor-header-root .ga-hdr-btn-sheen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.65s ease;
+    pointer-events: none;
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-cta:hover .ga-hdr-btn-sheen {
+    transform: translateX(100%);
+  }
+
+  /* Botón Hamburguesa Móvil */
+  #ga-elementor-header-root .ga-hdr-btn-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.9) !important;
+    border: 1px solid rgba(51, 65, 85, 0.8);
+    color: #cbd5e1 !important;
+    transition: all 0.2s ease;
+  }
+
+  @media (min-width: 640px) {
+    #ga-elementor-header-root .ga-hdr-btn-toggle {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #ga-elementor-header-root .ga-hdr-btn-toggle {
+      display: none;
+    }
+  }
+
+  #ga-elementor-header-root .ga-hdr-btn-toggle:hover {
+    background: #1e293b !important;
+    color: #ffffff !important;
+    border-color: #64748b;
+  }
+
+  /* =====================================================================
+     MENÚ DRAWER LATERAL MÓVIL (OFF-CANVAS)
+     ===================================================================== */
+  #ga-elementor-header-root .ga-hdr-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-backdrop.ga-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 85vw;
+    max-width: 320px;
+    height: 100vh;
+    background: #07111F !important;
+    border-left: 1px solid #1e293b;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000001;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-backdrop.ga-open .ga-hdr-drawer {
+    transform: translateX(0);
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8 !important;
+    transition: all 0.2s ease;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-close:hover {
+    background: #1e293b;
+    color: #ffffff !important;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-nav {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #e2e8f0 !important;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    min-height: 46px;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-link:hover,
+  #ga-elementor-header-root .ga-hdr-drawer-link.ga-active {
+    background: rgba(30, 41, 59, 0.8) !important;
+    color: #ffffff !important;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-link svg {
+    color: #64748b;
+    transition: transform 0.2s ease;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-link:hover svg {
+    color: #38bdf8;
+    transform: translateX(3px);
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-footer {
+    padding-top: 16px;
+    border-top: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-cta {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff !important;
+    background: linear-gradient(90deg, #164B9B, #1769E0) !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(22, 75, 155, 0.4);
+    min-height: 46px;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-wa {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff !important;
+    background: #059669 !important;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px -2px rgba(5, 150, 105, 0.35);
+    min-height: 46px;
+    transition: background 0.2s ease;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-wa:hover {
+    background: #10b981 !important;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-socials {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 4px;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-soc-fb {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff !important;
+    background: #1877F2 !important;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(24, 119, 242, 0.3);
+    min-height: 42px;
+  }
+
+  #ga-elementor-header-root .ga-hdr-drawer-soc-ig {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff !important;
+    background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF) !important;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(221, 42, 123, 0.3);
+    min-height: 42px;
+  }
+</style>
+
+<div id="ga-elementor-header-root">
+  <!-- Barra de Navegación Fija -->
+  <header class="ga-hdr-bar" id="ga-main-navbar">
+    <!-- Línea láser decorativa superior -->
+    <div class="ga-hdr-laser-line" aria-hidden="true"></div>
+
+    <div class="ga-hdr-container">
+      <!-- Zona 1: Logotipo -->
+      <a href="#inicio" class="ga-hdr-brand" aria-label="Genera Automotriz - Ir al inicio">
+        <!-- 
+          NOTA: Si ya subiste el logo a tu biblioteca de medios de WordPress, 
+          reemplaza la propiedad 'src' con tu URL completa de WordPress.
+        -->
+        <img
+          src="/images/LOGO%20GENERA%20-%20AUTOMOTRIZ%20_%20Bco_1.png"
+          alt="Genera Automotriz - Servicio Automotriz Profesional"
+          class="ga-hdr-logo-img"
+          loading="eager"
+        />
+      </a>
+
+      <!-- Zona 2: Enlaces de Navegación (Desktop) -->
+      <nav class="ga-hdr-nav-desktop" aria-label="Navegación principal">
+        <a href="#inicio" class="ga-hdr-nav-link ga-active" data-section="inicio">Inicio</a>
+        <a href="#por-que-genera" class="ga-hdr-nav-link" data-section="por-que-genera">Nuestra Regla</a>
+        <a href="#servicios" class="ga-hdr-nav-link" data-section="servicios">Servicios</a>
+        <a href="#resenas" class="ga-hdr-nav-link" data-section="resenas">Reseñas</a>
+        <a href="#ubicacion" class="ga-hdr-nav-link" data-section="ubicacion">Ubicación</a>
+        <a href="#contacto" class="ga-hdr-nav-link" data-section="contacto">Contacto</a>
+      </nav>
+
+      <!-- Zona 3: Botones de Acción y Redes Sociales -->
+      <div class="ga-hdr-actions">
+        <!-- Redes Sociales: Facebook & Instagram -->
+        <div class="ga-hdr-social-group">
+          <!-- Facebook Oficial -->
+          <a
+            href="https://www.facebook.com/GeneraAutomotriz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ga-hdr-btn-fb"
+            aria-label="Facebook de Genera Automotriz"
+            title="Visitar Facebook de Genera Automotriz"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+
+          <!-- Instagram Oficial -->
+          <a
+            href="https://www.instagram.com/generaautomotriz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ga-hdr-btn-ig"
+            aria-label="Instagram de Genera Automotriz"
+            title="Visitar Instagram de Genera Automotriz"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Botón Principal "AGENDA TU CITA" (WhatsApp) - Oculto en móvil (< 640px) -->
+        <a
+          href="https://wa.me/526624330056?text=Hola%20Genera%20Automotriz%2C%20quisiera%20agendar%20una%20cita%20para%20mi%20auto"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ga-hdr-btn-cta"
+          aria-label="Agendar cita por WhatsApp en Genera Automotriz"
+        >
+          <span class="ga-hdr-btn-sheen" aria-hidden="true"></span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>AGENDA TU CITA</span>
+        </a>
+
+        <!-- Botón Hamburguesa Móvil (Visible < 1024px) -->
+        <button
+          type="button"
+          class="ga-hdr-btn-toggle"
+          id="ga-mobile-toggle-btn"
+          aria-label="Abrir menú de navegación"
+          aria-expanded="false"
+        >
+          <svg id="ga-icon-hamburger" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menú Drawer Móvil con Fondo Oscuro Traslúcido -->
+  <div class="ga-hdr-drawer-backdrop" id="ga-drawer-backdrop" aria-hidden="true">
+    <div class="ga-hdr-drawer" id="ga-drawer-panel" role="dialog" aria-modal="true" aria-label="Menú Móvil">
+      <div>
+        <!-- Encabezado del Drawer -->
+        <div class="ga-hdr-drawer-header">
+          <img
+            src="/images/LOGO%20GENERA%20-%20AUTOMOTRIZ%20_%20Bco_1.png"
+            alt="Genera Automotriz"
+            style="height: 30px; width: auto; object-fit: contain;"
+          />
+          <button
+            type="button"
+            class="ga-hdr-drawer-close"
+            id="ga-drawer-close-btn"
+            aria-label="Cerrar menú"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Enlaces del Drawer -->
+        <nav class="ga-hdr-drawer-nav">
+          <a href="#inicio" class="ga-hdr-drawer-link ga-drawer-link-item">
+            <span>Inicio</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#por-que-genera" class="ga-hdr-drawer-link ga-drawer-link-item">
+            <span>Nuestra Regla</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#servicios" class="ga-hdr-drawer-link ga-drawer-link-item">
+            <span>Servicios</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#resenas" class="ga-hdr-drawer-link ga-drawer-link-item">
+            <span>Reseñas</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#ubicacion" class="ga-hdr-drawer-link ga-drawer-link-item">
+            <span>Ubicación</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#contacto" class="ga-hdr-drawer-link ga-drawer-link-item">
+            <span>Contacto</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Pie del Drawer con Acciones -->
+      <div class="ga-hdr-drawer-footer">
+        <!-- Botón Agenda Cita -->
+        <a
+          href="https://wa.me/526624330056?text=Hola%20Genera%20Automotriz%2C%20quisiera%20agendar%20una%20cita%20para%20mi%20auto"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ga-hdr-drawer-cta"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>AGENDA TU CITA</span>
+        </a>
+
+        <!-- Botón WhatsApp Directo -->
+        <a
+          href="https://wa.me/526624330056?text=Hola%20Genera%20Automotriz%2C%20quisiera%20agendar%20una%20cita%20para%20mi%20auto"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ga-hdr-drawer-wa"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 13.85 2.5 15.58 3.38 17.07L2.05 21.95L7.07 20.64C8.52 21.5 10.2 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.63 15.65C16.44 16.19 15.66 16.63 15.08 16.75C14.68 16.83 14.16 16.89 12.39 16.15C10.12 15.21 8.66 12.89 8.55 12.74C8.44 12.59 7.64 11.53 7.64 10.43C7.64 9.33 8.2 8.79 8.42 8.56C8.61 8.36 8.91 8.28 9.18 8.28C9.27 8.28 9.35 8.28 9.42 8.29C9.63 8.3 9.74 8.31 9.88 8.65C10.05 9.07 10.48 10.12 10.53 10.23C10.59 10.34 10.63 10.48 10.56 10.62C10.49 10.77 10.44 10.84 10.33 10.96C10.22 11.08 10.12 11.17 10 11.32C9.88 11.45 9.74 11.6 9.89 11.85C10.04 12.1 10.55 12.93 11.32 13.61C12.31 14.49 13.12 14.77 13.41 14.89C13.64 14.99 13.85 14.97 14.02 14.78C14.23 14.54 14.5 14.15 14.76 13.78C14.95 13.51 15.19 13.55 15.43 13.64C15.68 13.73 17 14.38 17.26 14.51C17.52 14.64 17.69 14.7 17.75 14.81C17.81 14.92 17.81 15.39 16.63 15.65Z"/>
+          </svg>
+          <span>WhatsApp: (662) 433 0056</span>
+        </a>
+
+        <!-- Redes Sociales en Móvil -->
+        <div class="ga-hdr-drawer-socials">
+          <a
+            href="https://www.facebook.com/GeneraAutomotriz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ga-hdr-drawer-soc-fb"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#ffffff">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>Facebook</span>
+          </a>
+
+          <a
+            href="https://www.instagram.com/generaautomotriz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ga-hdr-drawer-soc-ig"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#ffffff">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            <span>Instagram</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =======================================================================
+  SCRIPT COMPLETO, AISLADO (IIFE) Y COMPATIBLE CON ELEMENTOR / WORDPRESS
+======================================================================= -->
+<script>
+(function() {
+  'use strict';
+
+  // Esperar a que el DOM esté listo
+  function initGeneraHeader() {
+    var navbar = document.getElementById('ga-main-navbar');
+    var mobileToggleBtn = document.getElementById('ga-mobile-toggle-btn');
+    var drawerCloseBtn = document.getElementById('ga-drawer-close-btn');
+    var drawerBackdrop = document.getElementById('ga-drawer-backdrop');
+    var drawerPanel = document.getElementById('ga-drawer-panel');
+    var desktopLinks = document.querySelectorAll('#ga-elementor-header-root .ga-hdr-nav-link');
+    var drawerLinks = document.querySelectorAll('#ga-elementor-header-root .ga-drawer-link-item');
+
+    if (!navbar) return;
+
+    // 1. Manejo del Scroll: activar fondo sólido, blur y borde
+    var isScrolled = false;
+    function handleScroll() {
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (scrollY > 30) {
+        if (!isScrolled) {
+          navbar.classList.add('ga-is-scrolled');
+          isScrolled = true;
+        }
+      } else {
+        if (isScrolled) {
+          navbar.classList.remove('ga-is-scrolled');
+          isScrolled = false;
+        }
+      }
+
+      // Detección de sección activa para resaltar en el menú desktop
+      var sections = ['inicio', 'por-que-genera', 'servicios', 'resenas', 'ubicacion', 'contacto'];
+      var scrollPosition = scrollY + 220;
+
+      for (var i = 0; i < sections.length; i++) {
+        var secId = sections[i];
+        var el = document.getElementById(secId);
+        if (el) {
+          var top = el.offsetTop;
+          var height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            updateActiveLink(secId);
+            break;
+          }
+        }
+      }
+    }
+
+    function updateActiveLink(activeId) {
+      desktopLinks.forEach(function(link) {
+        var section = link.getAttribute('data-section');
+        if (section === activeId) {
+          link.classList.add('ga-active');
+        } else {
+          link.classList.remove('ga-active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Ejecutar al cargar
+
+    // 2. Control de Apertura / Cierre del Menú Móvil
+    function openMobileDrawer() {
+      if (drawerBackdrop) {
+        drawerBackdrop.classList.add('ga-open');
+        document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+      }
+    }
+
+    function closeMobileDrawer() {
+      if (drawerBackdrop) {
+        drawerBackdrop.classList.remove('ga-open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (mobileToggleBtn) {
+      mobileToggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openMobileDrawer();
+      });
+    }
+
+    if (drawerCloseBtn) {
+      drawerCloseBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        closeMobileDrawer();
+      });
+    }
+
+    // Cerrar al hacer clic en el fondo oscuro
+    if (drawerBackdrop) {
+      drawerBackdrop.addEventListener('click', function(e) {
+        if (e.target === drawerBackdrop) {
+          closeMobileDrawer();
+        }
+      });
+    }
+
+    // Evitar que clics dentro del panel cierren el drawer
+    if (drawerPanel) {
+      drawerPanel.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    }
+
+    // Cerrar el drawer al pulsar en cualquier enlace de navegación móvil
+    drawerLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        closeMobileDrawer();
+      });
+    });
+
+    // Cerrar drawer con tecla ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && drawerBackdrop && drawerBackdrop.classList.contains('ga-open')) {
+        closeMobileDrawer();
+      }
+    });
+
+    // 3. Desplazamiento Suave (Smooth Scroll) para enlaces con ancla '#'
+    var allAnchorLinks = document.querySelectorAll('#ga-elementor-header-root a[href^="#"]');
+    allAnchorLinks.forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        var targetId = this.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          var targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            var headerHeight = navbar.offsetHeight || 75;
+            var elementPosition = targetEl.getBoundingClientRect().top;
+            var offsetPosition = elementPosition + window.pageYOffset - (headerHeight - 10);
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGeneraHeader);
+  } else {
+    initGeneraHeader();
+  }
+})();
+</script>

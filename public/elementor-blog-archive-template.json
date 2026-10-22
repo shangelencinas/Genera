@@ -1,0 +1,56 @@
+{
+  "version": "0.4",
+  "title": "Genera Automotriz - Catálogo y Archivo de Blog",
+  "type": "page",
+  "content": [
+    {
+      "id": "ba701a1",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "full_width",
+        "stretch_section": "section-stretched",
+        "background_background": "classic",
+        "background_color": "#07111F",
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "is_linked": true
+        }
+      },
+      "elements": [
+        {
+          "id": "ba702b2",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null,
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "is_linked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "ba703c3",
+              "elType": "widget",
+              "widgetType": "html",
+              "isInner": false,
+              "settings": {
+                "html": "<iframe src=\"/elementor-blog-archive.html\" style=\"width:100%; min-height:100vh; border:none;\" id=\"ga-elementor-blog-frame\"></iframe>\n<script>\n  // Fallback directo que inyecta el contenido de elementor-blog-archive.html si está en el mismo dominio o como widget HTML puro\n  window.addEventListener('message', function(e) {\n    if (e.data && e.data.height) {\n      var frame = document.getElementById('ga-elementor-blog-frame');\n      if (frame) frame.style.height = e.data.height + 'px';\n    }\n  });\n</script>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
