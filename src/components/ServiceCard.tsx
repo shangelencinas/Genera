@@ -131,6 +131,10 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
         <img
           src={service.image}
           alt={service.title}
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="225"
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#091526] via-[#091526]/20 to-transparent" />

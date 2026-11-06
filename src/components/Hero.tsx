@@ -189,6 +189,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
                 <img
                   src={getAssetPath('/images/mecanico02.jpg')}
                   alt="Taller Automotriz Moderno Genera Automotriz en Hermosillo"
+                  width="640"
+                  height="480"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 />
 

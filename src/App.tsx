@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { TrustBar } from './components/TrustBar';
@@ -16,12 +16,14 @@ import { PeisaPartnership } from './components/PeisaPartnership';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
-import { PageLoader } from './components/PageLoader';
-import { BlogPostTemplatePage } from './components/BlogPostTemplatePage';
 import { getWhatsAppUrl } from './utils/whatsapp';
 
+// Lazy-load internal Elementor tools so they don't bloat the main landing page
+const BlogPostTemplatePage = lazy(() =>
+  import('./components/BlogPostTemplatePage').then((m) => ({ default: m.BlogPostTemplatePage }))
+);
+
 export default function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [currentView, setCurrentView] = useState<'home' | 'blog-template'>(() => {
     if (typeof window !== 'undefined') {
       return (window.location.hash === '#blog-template' || window.location.hash === '#single-post')
@@ -63,17 +65,16 @@ export default function App() {
 
   if (currentView === 'blog-template') {
     return (
-      <BlogPostTemplatePage 
-        onBackToHome={handleBackToHome}
-      />
+      <Suspense fallback={<div className="min-h-screen bg-[#07111F] flex items-center justify-center text-[#38BDF8] font-mono text-sm">Cargando herramienta...</div>}>
+        <BlogPostTemplatePage 
+          onBackToHome={handleBackToHome}
+        />
+      </Suspense>
     );
   }
 
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#07111F] text-slate-100 flex flex-col font-sans selection:bg-[#1769E0] selection:text-white">
-      {/* Fast Initial Page Transition */}
-      {!isLoaded && <PageLoader onLoaded={() => setIsLoaded(true)} />}
-
       {/* Sticky High-Tech Navigation Header */}
       <Header 
         onOpenAppointmentModal={handleOpenAppointmentModal}

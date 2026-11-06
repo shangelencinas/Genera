@@ -9,25 +9,29 @@ export const ThreeHeroCanvas: React.FC = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    const reducedMotion = prefersReducedMotion();
-    const isMobile = window.innerWidth < 768;
+    let cleanup: (() => void) | undefined;
+    let idleId: number | undefined;
 
-    // Set up Scene, Camera, Renderer
-    const scene = new THREE.Scene();
-    const width = container.clientWidth || window.innerWidth;
-    const height = container.clientHeight || window.innerHeight;
+    const initThree = () => {
+      const reducedMotion = prefersReducedMotion();
+      const isMobile = window.innerWidth < 768;
 
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-    camera.position.z = 24;
+      // Set up Scene, Camera, Renderer
+      const scene = new THREE.Scene();
+      const width = container.clientWidth || window.innerWidth;
+      const height = container.clientHeight || window.innerHeight;
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: !isMobile,
-      powerPreference: 'high-performance'
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
-    container.appendChild(renderer.domElement);
+      const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+      camera.position.z = 24;
+
+      const renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: false,
+        powerPreference: 'low-power'
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      container.appendChild(renderer.domElement);
 
     // 1. Subtle Constellation Network (Light & Minimalist Telemetry)
     const particleCount = isMobile ? 22 : 44;
@@ -182,20 +186,38 @@ export const ThreeHeroCanvas: React.FC = () => {
     animate();
 
     // Cleanup resources to prevent memory leaks
+    cleanup = () => {
+        cancelAnimationFrame(animationFrameId);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('resize', handleResize);
+
+        geometry.dispose();
+        pointMaterial.dispose();
+        lineGeometry.dispose();
+        lineMaterial.dispose();
+        renderer.dispose();
+
+        if (container.contains(renderer.domElement)) {
+          container.removeChild(renderer.domElement);
+        }
+      };
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      idleId = (window as unknown as { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(initThree);
+    } else {
+      idleId = setTimeout(initThree, 100) as unknown as number;
+    }
+
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
-
-      geometry.dispose();
-      pointMaterial.dispose();
-      lineGeometry.dispose();
-      lineMaterial.dispose();
-      renderer.dispose();
-
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
+      if (idleId) {
+        if ('cancelIdleCallback' in window) {
+          (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+        } else {
+          clearTimeout(idleId);
+        }
       }
+      if (cleanup) cleanup();
     };
   }, []);
 

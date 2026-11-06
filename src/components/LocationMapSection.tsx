@@ -5,6 +5,24 @@ import { CONTACT_INFO } from '../data/trustPoints';
 export const LocationMapSection: React.FC = () => {
   const googleMapsSearchUrl = 'https://www.google.com/maps/search/?api=1&query=Genera+Automotriz+Hermosillo+Sonora';
 
+  const [shouldLoadMap, setShouldLoadMap] = React.useState(false);
+  const mapContainerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (!mapContainerRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShouldLoadMap(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(mapContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="ubicacion" className="py-12 sm:py-20 bg-[#07111F] text-white border-t border-slate-800/80 relative overflow-hidden">
       {/* Background glow */}
@@ -121,7 +139,7 @@ export const LocationMapSection: React.FC = () => {
           </div>
 
           {/* Right Column: Google Maps Interactive Embed */}
-          <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative min-h-[340px] sm:min-h-[440px] bg-slate-950">
+          <div ref={mapContainerRef} className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative min-h-[340px] sm:min-h-[440px] bg-slate-950">
             {/* Visual Business Marker Badge over Map */}
             <div className="absolute top-3.5 left-3.5 z-10 p-2.5 sm:p-3 rounded-2xl bg-slate-950/95 backdrop-blur-md border border-slate-700/90 shadow-2xl flex items-center gap-2.5 sm:gap-3 pointer-events-none">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-600/40 shrink-0">
@@ -138,18 +156,24 @@ export const LocationMapSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Embed Google Maps with close zoom (z=16) and marked business query */}
-            <iframe
-              title="Ubicación Genera Automotriz en Hermosillo"
-              src="https://maps.google.com/maps?q=Genera+Automotriz,+Hermosillo,+Sonora&t=&z=16&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: '360px' }}
-              allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-full filter contrast-105"
-            />
+            {/* Embed Google Maps with close zoom (z=16) - Deferred until scrolled into view */}
+            {shouldLoadMap ? (
+              <iframe
+                title="Ubicación Genera Automotriz en Hermosillo"
+                src="https://maps.google.com/maps?q=Genera+Automotriz,+Hermosillo,+Sonora&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: '360px' }}
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full filter contrast-105"
+              />
+            ) : (
+              <div className="w-full h-full min-h-[360px] flex items-center justify-center bg-slate-950 text-slate-500 font-mono text-xs">
+                Cargando mapa interactivo...
+              </div>
+            )}
 
             {/* Floating Quick Navigation Chip */}
             <div className="absolute bottom-3 left-3 right-3 sm:right-auto sm:max-w-xs p-3 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-700/80 shadow-xl flex items-center justify-between gap-3 text-xs z-10">

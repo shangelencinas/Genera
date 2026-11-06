@@ -48,12 +48,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
     };
   }, [mobileMenuOpen]);
 
-  const navLinks: { label: string; href: string; id: string; isExternal?: boolean }[] = [
+  const navLinks = [
     { label: 'Inicio', href: '#inicio', id: 'inicio' },
     { label: 'Nuestra Regla', href: '#por-que-genera', id: 'por-que-genera' },
     { label: 'Servicios', href: '#servicios', id: 'servicios' },
     { label: 'Reseñas', href: '#resenas', id: 'resenas' },
-    { label: 'Blog', href: 'https://generamx.com/blog/', id: 'blog', isExternal: true },
+    { label: 'Blog', href: 'https://generamx.com/blog/', id: 'blog' },
     { label: 'Contacto', href: '#contacto', id: 'contacto' }
   ];
 
@@ -94,8 +94,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
                   <a
                     key={link.id}
                     href={link.href}
-                    target={link.isExternal ? '_blank' : undefined}
-                    rel={link.isExternal ? 'noopener noreferrer' : undefined}
                     className={`relative px-4 py-1.5 text-xs xl:text-sm font-semibold tracking-wide transition-all rounded-full ${
                       isActive
                         ? 'text-white bg-[#164B9B]/60 shadow-[0_0_12px_rgba(23,105,224,0.4)] border border-[#1769E0]/40'
@@ -196,8 +194,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
                   <a
                     key={link.id}
                     href={link.href}
-                    target={link.isExternal ? '_blank' : undefined}
-                    rel={link.isExternal ? 'noopener noreferrer' : undefined}
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center justify-between px-3.5 py-3 text-sm font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl transition-colors min-h-[46px]"
                   >
