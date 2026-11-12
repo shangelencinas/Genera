@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GeneraLogo } from './BrandLogos';
 import { MessageCircle, Menu, X, Calendar, ArrowRight } from 'lucide-react';
 import { CONTACT_INFO } from '../data/trustPoints';
+import { isInIframe } from '../animations/gsap';
 
 interface HeaderProps {
   onOpenAppointmentModal: (serviceId?: string) => void;
@@ -11,6 +12,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
+  const embedded = isInIframe();
 
   useEffect(() => {
     let ticking = false;
@@ -100,10 +102,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/80 backdrop-blur-md">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.id;
+                const isExternal = link.href.startsWith('http');
                 return (
                   <a
                     key={link.id}
                     href={link.href}
+                    target={isExternal ? '_blank' : undefined}
+                    rel={isExternal ? 'noopener noreferrer' : undefined}
                     className={`relative px-4 py-1.5 text-xs xl:text-sm font-semibold tracking-wide transition-all rounded-full ${
                       isActive
                         ? 'text-white bg-[#164B9B]/60 shadow-[0_0_12px_rgba(23,105,224,0.4)] border border-[#1769E0]/40'
@@ -183,7 +188,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
-            className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] bg-[#07111F] border-l border-slate-800 p-4 min-[360px]:p-5 sm:p-6 flex flex-col justify-between shadow-2xl overflow-y-auto"
+            className={`fixed top-0 right-0 ${
+              embedded ? 'h-auto max-h-[820px] rounded-bl-2xl border-b' : 'bottom-0'
+            } w-[85vw] max-w-[320px] bg-[#07111F] border-l border-slate-800 p-4 min-[360px]:p-5 sm:p-6 flex flex-col justify-between gap-6 shadow-2xl overflow-y-auto`}
             onClick={(e) => e.stopPropagation()}
           >
             <div>
@@ -200,17 +207,22 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
               </div>
 
               <nav className="mt-4 flex flex-col gap-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between px-3.5 py-3 text-sm font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl transition-colors min-h-[46px]"
-                  >
-                    <span>{link.label}</span>
-                    <ArrowRight className="w-4 h-4 text-slate-500" />
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  const isExternal = link.href.startsWith('http');
+                  return (
+                    <a
+                      key={link.id}
+                      href={link.href}
+                      target={isExternal ? '_blank' : undefined}
+                      rel={isExternal ? 'noopener noreferrer' : undefined}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between px-3.5 py-3 text-sm font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl transition-colors min-h-[46px]"
+                    >
+                      <span>{link.label}</span>
+                      <ArrowRight className="w-4 h-4 text-slate-500" />
+                    </a>
+                  );
+                })}
               </nav>
             </div>
 

@@ -18,8 +18,9 @@ export const ThreeHeroCanvas: React.FC = () => {
 
       // Set up Scene, Camera, Renderer
       const scene = new THREE.Scene();
-      const width = container.clientWidth || window.innerWidth;
-      const height = container.clientHeight || window.innerHeight;
+      const width = container.clientWidth || window.innerWidth || 1200;
+      const rawHeight = container.clientHeight || window.innerHeight || 760;
+      const height = Math.min(Math.max(rawHeight, 300), 1200);
 
       const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
       camera.position.z = 24;
@@ -112,9 +113,11 @@ export const ThreeHeroCanvas: React.FC = () => {
       if (!container) return;
       const w = container.clientWidth;
       const h = container.clientHeight;
-      camera.aspect = w / h;
+      if (!w || !h) return;
+      const clampedH = Math.min(Math.max(h, 300), 1200);
+      camera.aspect = w / clampedH;
       camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      renderer.setSize(w, clampedH);
     };
 
     window.addEventListener('resize', handleResize);

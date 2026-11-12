@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { Calendar, ArrowRight, ShieldCheck, Wrench, Award, ChevronDown, MapPin, CheckCircle } from 'lucide-react';
-import { gsap, prefersReducedMotion } from '../animations/gsap';
+import { gsap, prefersReducedMotion, isInIframe } from '../animations/gsap';
 import { ThreeHeroCanvas } from './ThreeHeroCanvas';
 import { getWhatsAppUrl } from '../utils/whatsapp';
 import { getAssetPath } from '../utils/assets';
@@ -19,91 +19,100 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
   const trustItemsRef = useRef<HTMLDivElement>(null);
   const visualCardRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return;
+  const embedded = isInIframe();
 
-    // Inside an iframe or low-power mobile, reveal immediately to guarantee zero blank elements
+  useLayoutEffect(() => {
+    const getAnimatedTargets = () => [
+      eyebrowRef.current,
+      headlineLine1Ref.current,
+      headlineLine2Ref.current,
+      subtextRef.current,
+      ctaContainerRef.current,
+      ...(trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : []),
+      visualCardRef.current
+    ].filter(Boolean);
+
+    if (prefersReducedMotion()) {
+      gsap.set(getAnimatedTargets(), { clearProps: 'all' });
+      return;
+    }
+
+    // Inside an iframe or mobile, reveal immediately to guarantee zero blank elements
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const shouldRevealImmediately = isMobile || isInIframe();
 
     const ctx = gsap.context(() => {
+      const targets = getAnimatedTargets();
+
+      if (shouldRevealImmediately) {
+        gsap.set(targets, { clearProps: 'all' });
+        return;
+      }
+
       const tl = gsap.timeline({
         defaults: { ease: 'power3.out' },
         onComplete: () => {
-          // Guarantee all animated elements are clean and fully visible
-          gsap.set(
-            [
-              eyebrowRef.current,
-              headlineLine1Ref.current,
-              headlineLine2Ref.current,
-              subtextRef.current,
-              ctaContainerRef.current,
-              trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : [],
-              visualCardRef.current
-            ],
-            { clearProps: 'opacity,transform' }
-          );
+          gsap.set(targets, { clearProps: 'all' });
         }
       });
 
-      if (isMobile) {
-        // Quick subtle fade on mobile to conserve GPU and battery
-        tl.fromTo(
-          [eyebrowRef.current, headlineLine1Ref.current, headlineLine2Ref.current, subtextRef.current, ctaContainerRef.current],
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.4, stagger: 0.06 }
-        ).fromTo(
-          visualCardRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.4 },
+      tl.fromTo(
+        eyebrowRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5 }
+      )
+        .fromTo(
+          [headlineLine1Ref.current, headlineLine2Ref.current],
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
           '-=0.2'
-        );
-      } else {
-        tl.fromTo(
-          eyebrowRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5 }
         )
-          .fromTo(
-            [headlineLine1Ref.current, headlineLine2Ref.current],
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
-            '-=0.2'
-          )
-          .fromTo(
-            subtextRef.current,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.6 },
-            '-=0.3'
-          )
-          .fromTo(
-            ctaContainerRef.current,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.6 },
-            '-=0.3'
-          )
-          .fromTo(
-            trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : [],
-            { opacity: 0, y: 15 },
-            { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
-            '-=0.3'
-          )
-          .fromTo(
-            visualCardRef.current,
-            { opacity: 0, scale: 0.95 },
-            { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' },
-            '-=0.5'
-          );
-      }
+        .fromTo(
+          subtextRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          '-=0.3'
+        )
+        .fromTo(
+          ctaContainerRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          '-=0.3'
+        )
+        .fromTo(
+          trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : [],
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+          '-=0.3'
+        )
+        .fromTo(
+          visualCardRef.current,
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' },
+          '-=0.5'
+        );
     }, heroRef);
 
-    return () => ctx.revert();
+    // Safety fallback: never leave Hero elements hidden if GSAP ticker is throttled
+    const safetyTimer = setTimeout(() => {
+      gsap.set(getAnimatedTargets(), { clearProps: 'all' });
+    }, 1800);
+
+    return () => {
+      clearTimeout(safetyTimer);
+      ctx.revert();
+    };
   }, []);
 
   return (
     <section
       id="inicio"
       ref={heroRef}
-      className="relative min-h-[90vh] lg:min-h-screen pt-24 sm:pt-28 pb-14 sm:pb-20 lg:py-32 flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#040913] via-[#07111F] to-[#09172B] automotive-grid"
+      className={`relative ${
+        embedded
+          ? 'min-h-[620px] lg:min-h-[760px] pt-28 sm:pt-32 pb-14 sm:pb-20 lg:pt-36 lg:pb-24'
+          : 'min-h-[90vh] lg:min-h-screen pt-24 sm:pt-28 pb-14 sm:pb-20 lg:py-32'
+      } flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#040913] via-[#07111F] to-[#09172B] automotive-grid`}
     >
       {/* 3D Automotive Particle & Telemetry Constellation */}
       <ThreeHeroCanvas />

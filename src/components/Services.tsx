@@ -3,7 +3,7 @@ import { SERVICES_DATA } from '../data/services';
 import { ServiceCard } from './ServiceCard';
 import { ServiceModal } from './ServiceModal';
 import { ServiceItem } from '../types';
-import { gsap, prefersReducedMotion } from '../animations/gsap';
+import { gsap, prefersReducedMotion, isInIframe } from '../animations/gsap';
 import { Wrench } from 'lucide-react';
 
 interface ServicesProps {
@@ -12,9 +12,20 @@ interface ServicesProps {
 
 export const Services: React.FC<ServicesProps> = ({ onOpenAppointmentModal }) => {
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
+  const [modalAnchorTop, setModalAnchorTop] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectService = (service: ServiceItem, element?: HTMLElement | null) => {
+    if (element && isInIframe()) {
+      const rect = element.getBoundingClientRect();
+      setModalAnchorTop(Math.max(88, rect.top));
+    } else {
+      setModalAnchorTop(null);
+    }
+    setSelectedService(service);
+  };
 
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
@@ -124,7 +135,7 @@ export const Services: React.FC<ServicesProps> = ({ onOpenAppointmentModal }) =>
             <ServiceCard
               key={service.id}
               service={service}
-              onSelectService={(s) => setSelectedService(s)}
+              onSelectService={handleSelectService}
               onQuickBook={(id) => onOpenAppointmentModal(id)}
             />
           ))}
@@ -134,7 +145,11 @@ export const Services: React.FC<ServicesProps> = ({ onOpenAppointmentModal }) =>
       {/* Service Details Modal */}
       <ServiceModal
         service={selectedService}
-        onClose={() => setSelectedService(null)}
+        anchorTop={modalAnchorTop}
+        onClose={() => {
+          setSelectedService(null);
+          setModalAnchorTop(null);
+        }}
         onBookService={(id) => onOpenAppointmentModal(id)}
       />
     </section>

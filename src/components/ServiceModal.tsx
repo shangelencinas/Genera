@@ -2,18 +2,22 @@ import React, { useEffect } from 'react';
 import { ServiceItem } from '../types';
 import { X, Check, Calendar, ShieldCheck, PhoneCall, MessageCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../utils/whatsapp';
+import { isInIframe } from '../animations/gsap';
 
 interface ServiceModalProps {
   service: ServiceItem | null;
+  anchorTop?: number | null;
   onClose: () => void;
   onBookService: (serviceId: string) => void;
 }
 
 export const ServiceModal: React.FC<ServiceModalProps> = ({
   service,
+  anchorTop = null,
   onClose,
   onBookService
 }) => {
+  const embedded = isInIframe();
   // Lock body scroll when modal is open
   useEffect(() => {
     if (service) {
@@ -28,17 +32,27 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
 
   if (!service) return null;
 
+  const anchoredInIframe = embedded && anchorTop !== null;
+
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md transition-opacity duration-200 overflow-y-auto"
-      style={{ zIndex: 100 }}
+      className={`fixed inset-0 z-[100] flex ${
+        anchoredInIframe ? 'items-start justify-center' : 'items-center justify-center'
+      } p-3.5 sm:p-4 bg-black/80 backdrop-blur-md transition-opacity duration-200 overflow-y-auto`}
+      style={
+        anchoredInIframe
+          ? { zIndex: 100, paddingTop: `${Math.max(88, anchorTop - 32)}px` }
+          : { zIndex: 100 }
+      }
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-service-title"
     >
       <div
-        className="relative z-[100] w-full max-w-lg rounded-2xl bg-[#081324] border border-slate-700/80 shadow-2xl p-5 sm:p-8 text-left max-h-[90vh] overflow-y-auto flex flex-col justify-between my-auto"
+        className={`relative z-[100] w-full max-w-lg rounded-2xl bg-[#081324] border border-slate-700/80 shadow-2xl p-5 sm:p-8 text-left ${
+          embedded ? 'max-h-[760px]' : 'max-h-[90vh] my-auto'
+        } overflow-y-auto flex flex-col justify-between`}
         style={{ zIndex: 100 }}
         onClick={(e) => e.stopPropagation()}
       >

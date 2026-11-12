@@ -18,6 +18,7 @@ import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { getWhatsAppUrl } from './utils/whatsapp';
 import { initIframeResizeBridge, notifyParentHeight } from './utils/iframeBridge';
+import { isInIframe } from './animations/gsap';
 
 // Lazy-load internal Elementor tools so they don't bloat the main landing page
 const BlogPostTemplatePage = lazy(() =>
@@ -33,6 +34,8 @@ export default function App() {
     }
     return 'home';
   });
+
+  const embedded = isInIframe();
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -73,7 +76,7 @@ export default function App() {
 
   if (currentView === 'blog-template') {
     return (
-      <Suspense fallback={<div className="min-h-screen bg-[#07111F] flex items-center justify-center text-[#38BDF8] font-mono text-sm">Cargando herramienta...</div>}>
+      <Suspense fallback={<div className={`${embedded ? 'min-h-[600px]' : 'min-h-screen'} bg-[#07111F] flex items-center justify-center text-[#38BDF8] font-mono text-sm`}>Cargando herramienta...</div>}>
         <BlogPostTemplatePage 
           onBackToHome={handleBackToHome}
         />
@@ -82,7 +85,10 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#07111F] text-slate-100 flex flex-col font-sans selection:bg-[#1769E0] selection:text-white">
+    <div
+      id="genera-app-root"
+      className={`relative ${embedded ? '' : 'min-h-screen'} w-full max-w-full overflow-x-hidden bg-[#07111F] text-slate-100 flex flex-col font-sans selection:bg-[#1769E0] selection:text-white`}
+    >
       {/* Sticky High-Tech Navigation Header */}
       <Header 
         onOpenAppointmentModal={handleOpenAppointmentModal}

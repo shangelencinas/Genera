@@ -19,21 +19,39 @@ export const calculateContentHeight = (): number => {
 
   const body = document.body;
   const doc = document.documentElement;
+  const root = document.getElementById('root');
+  const appContainer =
+    document.getElementById('genera-app-root') ||
+    (root?.firstElementChild as HTMLElement | null);
 
   if (!body || !doc) return 0;
 
-  // Real content height taking max of scroll and offset heights
-  // and ensuring we don't return subpixel jitter
-  const height = Math.max(
+  // Measure the actual React app wrapper so iframe CSS height (clientHeight / 100vh)
+  // never locks the document height or triggers expansion feedback loops.
+  if (appContainer) {
+    const appRectHeight = Math.ceil(appContainer.getBoundingClientRect().height);
+    const appHeight = Math.max(
+      appContainer.scrollHeight,
+      appContainer.offsetHeight,
+      appRectHeight
+    );
+
+    if (appHeight > 200) {
+      return Math.ceil(Math.max(appHeight, body.offsetHeight));
+    }
+  }
+
+  const rootHeight = root ? Math.max(root.scrollHeight, root.offsetHeight) : 0;
+
+  const fallbackHeight = Math.max(
+    rootHeight,
     body.scrollHeight,
     doc.scrollHeight,
     body.offsetHeight,
-    doc.offsetHeight,
-    body.clientHeight,
-    doc.clientHeight
+    doc.offsetHeight
   );
 
-  return Math.ceil(height);
+  return Math.ceil(fallbackHeight);
 };
 
 /**
@@ -113,18 +131,22 @@ export const initIframeResizeBridge = (): (() => void) => {
     }).catch(() => {});
   }
 
-  // 5. ResizeObserver on document.body and document.documentElement
+  // 5. ResizeObserver on app container and document.body (avoid documentElement to prevent resize feedback loops)
   let resizeObserver: ResizeObserver | null = null;
   if ('ResizeObserver' in window) {
     resizeObserver = new ResizeObserver(() => {
       notifyParentHeight();
     });
 
+    const appContainer =
+      document.getElementById('genera-app-root') ||
+      document.getElementById('root');
+
+    if (appContainer) {
+      resizeObserver.observe(appContainer);
+    }
     if (document.body) {
       resizeObserver.observe(document.body);
-    }
-    if (document.documentElement) {
-      resizeObserver.observe(document.documentElement);
     }
   }
 
@@ -160,11 +182,20 @@ export const initIframeResizeBridge = (): (() => void) => {
     setTimeout(() => notifyParentHeight(true), 4000)
   ];
 
+  // 9. Respond to incoming resize requests from parent window
+  const handleParentMessage = (event: MessageEvent) => {
+    if (event.data && typeof event.data === 'object' && event.data.type === 'REQUEST_RESIZE') {
+      notifyParentHeight(true);
+    }
+  };
+  window.addEventListener('message', handleParentMessage, { passive: true });
+
   return () => {
     isInitialized = false;
     if (rafId !== null) cancelAnimationFrame(rafId);
     window.removeEventListener('resize', handleResize);
     window.removeEventListener('orientationchange', handleResize);
+    window.removeEventListener('message', handleParentMessage);
     document.removeEventListener('load', handleImageLoad, { capture: true });
     if (resizeObserver) resizeObserver.disconnect();
     if (mutationObserver) mutationObserver.disconnect();

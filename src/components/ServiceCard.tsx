@@ -16,7 +16,7 @@ import { getWhatsAppUrl } from '../utils/whatsapp';
 
 interface ServiceCardProps {
   service: ServiceItem;
-  onSelectService: (service: ServiceItem) => void;
+  onSelectService: (service: ServiceItem, element?: HTMLElement | null) => void;
   onQuickBook: (serviceId: string) => void;
 }
 
@@ -108,13 +108,13 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="service-card group relative flex flex-col justify-between p-4 min-[360px]:p-5 sm:p-7 rounded-2xl bg-gradient-to-b from-[#091526]/95 to-[#07111F]/95 backdrop-blur-md border border-slate-800 hover:border-[#1769E0]/60 shadow-xl transition-all duration-300 overflow-hidden cursor-pointer active:scale-[0.99]"
-      onClick={() => onSelectService(service)}
+      onClick={() => onSelectService(service, cardRef.current)}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onSelectService(service);
+          onSelectService(service, cardRef.current);
         }
       }}
       aria-label={`Ver detalles del servicio: ${service.title}`}
