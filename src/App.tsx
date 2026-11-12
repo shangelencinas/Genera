@@ -17,6 +17,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { getWhatsAppUrl } from './utils/whatsapp';
+import { initIframeResizeBridge, notifyParentHeight } from './utils/iframeBridge';
 
 // Lazy-load internal Elementor tools so they don't bloat the main landing page
 const BlogPostTemplatePage = lazy(() =>
@@ -65,54 +66,9 @@ export default function App() {
 
   // Iframe auto-resize communication for WordPress / Elementor
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const isIframe = window.self !== window.top;
-
-    const sendHeight = () => {
-      try {
-        const docHeight = Math.max(
-          document.body.scrollHeight,
-          document.documentElement.scrollHeight,
-          document.body.offsetHeight,
-          document.documentElement.offsetHeight
-        );
-        // Post message to parent window with identifiable source
-        window.parent.postMessage(
-          {
-            type: 'GENERA_AUTOMOTRIZ_RESIZE',
-            height: docHeight
-          },
-          '*'
-        );
-      } catch {
-        // ignore cross-origin error
-      }
-    };
-
-    // Initial send
-    sendHeight();
-
-    // Use ResizeObserver to notify WordPress whenever layout shifts
-    let resizeObserver: ResizeObserver | null = null;
-    if ('ResizeObserver' in window) {
-      resizeObserver = new ResizeObserver(() => {
-        sendHeight();
-      });
-      resizeObserver.observe(document.body);
-    }
-
-    // Interval safety for when dynamic images or fonts load
-    const intervalId = setInterval(sendHeight, 1500);
-
-    const onWindowResize = () => sendHeight();
-    window.addEventListener('resize', onWindowResize, { passive: true });
-
-    return () => {
-      if (resizeObserver) resizeObserver.disconnect();
-      clearInterval(intervalId);
-      window.removeEventListener('resize', onWindowResize);
-    };
+    const cleanup = initIframeResizeBridge();
+    notifyParentHeight(true);
+    return cleanup;
   }, [currentView]);
 
   if (currentView === 'blog-template') {
