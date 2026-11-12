@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
               {/* Social Media Links: Facebook & Instagram */}
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <a
-                  href="https://www.facebook.com/GeneraAutomotriz"
+                  href="https://www.facebook.com/genera.automotriz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1877F2] hover:bg-[#166fe5] text-white flex items-center justify-center transition-all shadow-md shadow-[#1877F2]/30 hover:shadow-lg hover:shadow-[#1877F2]/50 hover:scale-105 active:scale-95 border border-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1877F2]"
@@ -229,7 +229,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
               {/* Social Media in Mobile Drawer */}
               <div className="flex items-center justify-center gap-2 pt-1">
                 <a
-                  href="https://www.facebook.com/GeneraAutomotriz"
+                  href="https://www.facebook.com/genera.automotriz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-bold text-white bg-[#1877F2] hover:bg-[#166fe5] rounded-xl shadow-md shadow-[#1877F2]/30 transition-all min-h-[42px] active:scale-95"
