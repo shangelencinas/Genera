@@ -124,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
                 </a>
 
                 <a
-                  href="https://www.instagram.com/generaautomotriz"
+                  href="https://www.instagram.com/genera.automotriz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] hover:opacity-95 text-white flex items-center justify-center transition-all shadow-md shadow-[#DD2A7B]/30 hover:shadow-lg hover:shadow-[#DD2A7B]/50 hover:scale-105 active:scale-95 border border-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DD2A7B]"
@@ -242,7 +242,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
                 </a>
 
                 <a
-                  href="https://www.instagram.com/generaautomotriz"
+                  href="https://www.instagram.com/genera.automotriz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-bold text-white bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] hover:opacity-95 rounded-xl shadow-md shadow-[#DD2A7B]/30 transition-all min-h-[42px] active:scale-95"

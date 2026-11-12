@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
               </a>
 
               <a
-                href="https://www.instagram.com/generaautomotriz"
+                href="https://www.instagram.com/genera.automotriz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 min-h-[44px] min-w-[44px] rounded-xl bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] hover:opacity-95 text-white flex items-center justify-center shadow-md shadow-[#DD2A7B]/30 transition-all hover:scale-105 active:scale-95"
