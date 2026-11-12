@@ -19,40 +19,56 @@ export const Services: React.FC<ServicesProps> = ({ onOpenAppointmentModal }) =>
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      const cards = gridRef.current ? Array.from(gridRef.current.children) : [];
+
+      if (isEmbedded) {
+        // Direct reveal with zero opacity risk
+        if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
+        if (cards.length) gsap.set(cards, { clearProps: 'all' });
+        return;
+      }
+
       // Header Animation
       gsap.fromTo(
         headerRef.current,
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.7,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: headerRef.current,
-            start: 'top 85%',
+            start: 'top 90%',
             once: true
+          },
+          onComplete: () => {
+            if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
           }
         }
       );
 
       // Stagger Cards Animation
-      if (gridRef.current) {
-        const cards = Array.from(gridRef.current.children);
+      if (cards.length) {
         gsap.fromTo(
           cards,
-          { opacity: 0, y: 45 },
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.65,
+            duration: 0.5,
             stagger: 0.08,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: gridRef.current,
-              start: 'top 80%',
+              start: 'top 85%',
               once: true
+            },
+            onComplete: () => {
+              gsap.set(cards, { clearProps: 'all' });
             }
           }
         );

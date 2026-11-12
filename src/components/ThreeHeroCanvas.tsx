@@ -119,12 +119,25 @@ export const ThreeHeroCanvas: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
+    // IntersectionObserver to pause loop when scrolled out of view
+    let isVisible = true;
+    let observer: IntersectionObserver | null = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+      }, { rootMargin: '100px' });
+      observer.observe(container);
+    }
+
     // Animation Loop
     let animationFrameId: number;
     let clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+
+      // Skip GPU cycles completely if scrolled out of view
+      if (!isVisible) return;
 
       const elapsedTime = clock.getElapsedTime();
 
@@ -188,6 +201,7 @@ export const ThreeHeroCanvas: React.FC = () => {
     // Cleanup resources to prevent memory leaks
     cleanup = () => {
         cancelAnimationFrame(animationFrameId);
+        if (observer) observer.disconnect();
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('resize', handleResize);
 

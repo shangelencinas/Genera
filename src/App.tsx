@@ -63,6 +63,58 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Iframe auto-resize communication for WordPress / Elementor
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const isIframe = window.self !== window.top;
+
+    const sendHeight = () => {
+      try {
+        const docHeight = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.offsetHeight
+        );
+        // Post message to parent window with identifiable source
+        window.parent.postMessage(
+          {
+            type: 'GENERA_AUTOMOTRIZ_RESIZE',
+            height: docHeight
+          },
+          '*'
+        );
+      } catch {
+        // ignore cross-origin error
+      }
+    };
+
+    // Initial send
+    sendHeight();
+
+    // Use ResizeObserver to notify WordPress whenever layout shifts
+    let resizeObserver: ResizeObserver | null = null;
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(() => {
+        sendHeight();
+      });
+      resizeObserver.observe(document.body);
+    }
+
+    // Interval safety for when dynamic images or fonts load
+    const intervalId = setInterval(sendHeight, 1500);
+
+    const onWindowResize = () => sendHeight();
+    window.addEventListener('resize', onWindowResize, { passive: true });
+
+    return () => {
+      if (resizeObserver) resizeObserver.disconnect();
+      clearInterval(intervalId);
+      window.removeEventListener('resize', onWindowResize);
+    };
+  }, [currentView]);
+
   if (currentView === 'blog-template') {
     return (
       <Suspense fallback={<div className="min-h-screen bg-[#07111F] flex items-center justify-center text-[#38BDF8] font-mono text-sm">Cargando herramienta...</div>}>

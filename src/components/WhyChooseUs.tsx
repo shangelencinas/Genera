@@ -11,38 +11,53 @@ export const WhyChooseUs: React.FC = () => {
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      const cards = cardsRef.current ? Array.from(cardsRef.current.children) : [];
+
+      if (isEmbedded) {
+        if (titleRef.current) gsap.set(titleRef.current, { clearProps: 'all' });
+        if (cards.length) gsap.set(cards, { clearProps: 'all' });
+        return;
+      }
+
       gsap.fromTo(
         titleRef.current,
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 25 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.7,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: titleRef.current,
-            start: 'top 85%',
+            start: 'top 90%',
             once: true
+          },
+          onComplete: () => {
+            if (titleRef.current) gsap.set(titleRef.current, { clearProps: 'all' });
           }
         }
       );
 
-      if (cardsRef.current) {
-        const cards = Array.from(cardsRef.current.children);
+      if (cards.length) {
         gsap.fromTo(
           cards,
-          { opacity: 0, y: 40 },
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.1,
+            duration: 0.5,
+            stagger: 0.08,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: cardsRef.current,
-              start: 'top 80%',
+              start: 'top 85%',
               once: true
+            },
+            onComplete: () => {
+              gsap.set(cards, { clearProps: 'all' });
             }
           }
         );

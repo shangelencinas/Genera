@@ -13,7 +13,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
   const [activeSection, setActiveSection] = useState('inicio');
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const updateActiveSection = () => {
       setIsScrolled(window.scrollY > 30);
 
       const sections = ['inicio', 'por-que-genera', 'servicios', 'resenas', 'ubicacion', 'contacto'];
@@ -29,6 +31,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
             break;
           }
         }
+      }
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateActiveSection);
+        ticking = true;
       }
     };
 

@@ -22,44 +22,78 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    // Inside an iframe or low-power mobile, reveal immediately to guarantee zero blank elements
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-      tl.fromTo(
-        eyebrowRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5 }
-      )
-        .fromTo(
-          [headlineLine1Ref.current, headlineLine2Ref.current],
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
-          '-=0.2'
-        )
-        .fromTo(
-          subtextRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6 },
-          '-=0.3'
-        )
-        .fromTo(
-          ctaContainerRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6 },
-          '-=0.3'
-        )
-        .fromTo(
-          trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : [],
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
-          '-=0.3'
-        )
-        .fromTo(
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        onComplete: () => {
+          // Guarantee all animated elements are clean and fully visible
+          gsap.set(
+            [
+              eyebrowRef.current,
+              headlineLine1Ref.current,
+              headlineLine2Ref.current,
+              subtextRef.current,
+              ctaContainerRef.current,
+              trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : [],
+              visualCardRef.current
+            ],
+            { clearProps: 'opacity,transform' }
+          );
+        }
+      });
+
+      if (isMobile) {
+        // Quick subtle fade on mobile to conserve GPU and battery
+        tl.fromTo(
+          [eyebrowRef.current, headlineLine1Ref.current, headlineLine2Ref.current, subtextRef.current, ctaContainerRef.current],
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.4, stagger: 0.06 }
+        ).fromTo(
           visualCardRef.current,
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' },
-          '-=0.8'
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4 },
+          '-=0.2'
         );
+      } else {
+        tl.fromTo(
+          eyebrowRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5 }
+        )
+          .fromTo(
+            [headlineLine1Ref.current, headlineLine2Ref.current],
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
+            '-=0.2'
+          )
+          .fromTo(
+            subtextRef.current,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.6 },
+            '-=0.3'
+          )
+          .fromTo(
+            ctaContainerRef.current,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.6 },
+            '-=0.3'
+          )
+          .fromTo(
+            trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : [],
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+            '-=0.3'
+          )
+          .fromTo(
+            visualCardRef.current,
+            { opacity: 0, scale: 0.95 },
+            { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' },
+            '-=0.5'
+          );
+      }
     }, heroRef);
 
     return () => ctx.revert();

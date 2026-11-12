@@ -16,35 +16,49 @@ export const MechanicsSection: React.FC<MechanicsProps> = ({ onOpenAppointmentMo
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      if (isEmbedded) {
+        if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
+        if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
+        return;
+      }
+
       gsap.fromTo(
         leftColRef.current,
-        { opacity: 0, x: -40 },
+        { opacity: 0, x: -30 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 0.7,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 75%',
+            start: 'top 85%',
             once: true
+          },
+          onComplete: () => {
+            if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
           }
         }
       );
 
       gsap.fromTo(
         rightColRef.current,
-        { opacity: 0, x: 40 },
+        { opacity: 0, x: 30 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 0.7,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 75%',
+            start: 'top 85%',
             once: true
+          },
+          onComplete: () => {
+            if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
           }
         }
       );

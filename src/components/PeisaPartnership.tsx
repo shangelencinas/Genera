@@ -10,19 +10,29 @@ export const PeisaPartnership: React.FC = () => {
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      if (isEmbedded) {
+        if (containerRef.current) gsap.set(containerRef.current, { clearProps: 'all' });
+        return;
+      }
+
       gsap.fromTo(
         containerRef.current,
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.5,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 85%',
+            start: 'top 90%',
             once: true
+          },
+          onComplete: () => {
+            if (containerRef.current) gsap.set(containerRef.current, { clearProps: 'all' });
           }
         }
       );

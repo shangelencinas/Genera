@@ -18,36 +18,54 @@ export const DiagnosticsSection: React.FC<DiagnosticsProps> = ({ onOpenAppointme
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      const listItems = listRef.current?.children ? Array.from(listRef.current.children) : [];
+
+      if (isEmbedded) {
+        if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
+        if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
+        if (listItems.length) gsap.set(listItems, { clearProps: 'all' });
+        if (ctaRef.current) gsap.set(ctaRef.current, { clearProps: 'all' });
+        return;
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 75%',
+          start: 'top 85%',
           once: true
+        },
+        onComplete: () => {
+          if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
+          if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
+          if (listItems.length) gsap.set(listItems, { clearProps: 'all' });
+          if (ctaRef.current) gsap.set(ctaRef.current, { clearProps: 'all' });
         }
       });
 
       tl.fromTo(
         leftColRef.current,
-        { opacity: 0, x: -40 },
-        { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' }
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }
       )
         .fromTo(
           rightColRef.current,
-          { opacity: 0, x: 30 },
-          { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' },
-          '-=0.5'
+          { opacity: 0, x: 20 },
+          { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' },
+          '-=0.4'
         )
         .fromTo(
-          listRef.current?.children ? Array.from(listRef.current.children) : [],
+          listItems,
           { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.45, stagger: 0.1, ease: 'power2.out' },
+          { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' },
           '-=0.3'
         )
         .fromTo(
           ctaRef.current,
           { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+          { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
           '-=0.2'
         );
     }, sectionRef);

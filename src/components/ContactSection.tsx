@@ -39,51 +39,69 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialServiceId
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      if (isEmbedded) {
+        if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
+        if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
+        if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
+        return;
+      }
+
       gsap.fromTo(
         headerRef.current,
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.7,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 80%',
+            start: 'top 85%',
             once: true
+          },
+          onComplete: () => {
+            if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
           }
         }
       );
 
       gsap.fromTo(
         leftColRef.current,
-        { opacity: 0, x: -30 },
+        { opacity: 0, x: -20 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.7,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 75%',
+            start: 'top 80%',
             once: true
+          },
+          onComplete: () => {
+            if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
           }
         }
       );
 
       gsap.fromTo(
         rightColRef.current,
-        { opacity: 0, x: 30 },
+        { opacity: 0, x: 20 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.7,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 75%',
+            start: 'top 80%',
             once: true
+          },
+          onComplete: () => {
+            if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
           }
         }
       );

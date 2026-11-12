@@ -9,18 +9,48 @@ export const LocationMapSection: React.FC = () => {
   const mapContainerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    if (!mapContainerRef.current) return;
+    // If inside an iframe where IntersectionObserver might not trigger because the parent window scrolls,
+    // or if the browser doesn't fire observer immediately, provide a fallback.
+    const isEmbedded = typeof window !== 'undefined' && window.self !== window.top;
+    if (isEmbedded) {
+      // In Elementor iframe, load the map after a short delay so user has it ready
+      const timer = setTimeout(() => {
+        setShouldLoadMap(true);
+      }, 1200);
+      return () => clearTimeout(timer);
+    }
+
+    if (!mapContainerRef.current) {
+      setShouldLoadMap(true);
+      return;
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldLoadMap(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0] && entries[0].isIntersecting) {
           setShouldLoadMap(true);
           observer.disconnect();
         }
       },
-      { rootMargin: '300px' }
+      { rootMargin: '400px' }
     );
     observer.observe(mapContainerRef.current);
-    return () => observer.disconnect();
+
+    // Safety timeout: if after 4 seconds it hasn't triggered, load map anyway
+    const fallbackTimer = setTimeout(() => {
+      setShouldLoadMap(true);
+      observer.disconnect();
+    }, 4000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallbackTimer);
+    };
   }, []);
 
   return (

@@ -9,23 +9,34 @@ export const TrustBar: React.FC = () => {
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
       if (!itemsRef.current) return;
       const children = Array.from(itemsRef.current.children);
 
+      if (isEmbedded) {
+        // In iframe or mobile, reveal directly with clearProps to avoid blank bar
+        gsap.set(children, { opacity: 1, y: 0, clearProps: 'all' });
+        return;
+      }
+
       gsap.fromTo(
         children,
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
-          stagger: 0.1,
+          duration: 0.5,
+          stagger: 0.08,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 85%',
+            start: 'top 95%',
             once: true
+          },
+          onComplete: () => {
+            gsap.set(children, { clearProps: 'all' });
           }
         }
       );

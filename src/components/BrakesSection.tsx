@@ -17,35 +17,49 @@ export const BrakesSection: React.FC<BrakesProps> = ({ onOpenAppointmentModal })
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      if (isEmbedded) {
+        if (textColRef.current) gsap.set(textColRef.current, { clearProps: 'all' });
+        if (visualColRef.current) gsap.set(visualColRef.current, { clearProps: 'all' });
+        return;
+      }
+
       gsap.fromTo(
         textColRef.current,
-        { opacity: 0, x: -35 },
+        { opacity: 0, x: -30 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 0.7,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 75%',
+            start: 'top 85%',
             once: true
+          },
+          onComplete: () => {
+            if (textColRef.current) gsap.set(textColRef.current, { clearProps: 'all' });
           }
         }
       );
 
       gsap.fromTo(
         visualColRef.current,
-        { opacity: 0, x: 35 },
+        { opacity: 0, x: 30 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 0.7,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 75%',
+            start: 'top 85%',
             once: true
+          },
+          onComplete: () => {
+            if (visualColRef.current) gsap.set(visualColRef.current, { clearProps: 'all' });
           }
         }
       );

@@ -10,19 +10,29 @@ export const AboutSection: React.FC = () => {
   useLayoutEffect(() => {
     if (prefersReducedMotion()) return;
 
+    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+
     const ctx = gsap.context(() => {
+      if (isEmbedded) {
+        if (contentRef.current) gsap.set(contentRef.current, { clearProps: 'all' });
+        return;
+      }
+
       gsap.fromTo(
         contentRef.current,
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 25 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: contentRef.current,
-            start: 'top 80%',
+            start: 'top 85%',
             once: true
+          },
+          onComplete: () => {
+            if (contentRef.current) gsap.set(contentRef.current, { clearProps: 'all' });
           }
         }
       );
