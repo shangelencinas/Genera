@@ -6,26 +6,4 @@ if (typeof window !== 'undefined') {
 }
 
 export { gsap, ScrollTrigger };
-
-export const prefersReducedMotion = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  try {
-    const hasReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (hasReduced) return true;
-  } catch {
-    // ignore
-  }
-  return false;
-};
-
-/**
- * Checks whether the app is running embedded in an iframe (e.g. Elementor / WordPress)
- */
-export const isInIframe = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  try {
-    return window.self !== window.top;
-  } catch {
-    return true;
-  }
-};
+export { isInIframe, isIOSDevice, prefersReducedMotion, shouldUseLightEffects } from '../utils/device';

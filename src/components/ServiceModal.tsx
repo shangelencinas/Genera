@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ServiceItem } from '../types';
 import { X, Check, Calendar, ShieldCheck, PhoneCall, MessageCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../utils/whatsapp';
-import { isInIframe } from '../animations/gsap';
+import { isInIframe } from '../utils/device';
 
 interface ServiceModalProps {
   service: ServiceItem | null;
@@ -38,7 +38,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
     <div
       className={`fixed inset-0 z-[100] flex ${
         anchoredInIframe ? 'items-start justify-center' : 'items-center justify-center'
-      } p-3.5 sm:p-4 bg-black/80 backdrop-blur-md transition-opacity duration-200 overflow-y-auto`}
+      } p-3.5 sm:p-4 bg-black/85 md:backdrop-blur-md transition-opacity duration-200 overflow-y-auto`}
       style={
         anchoredInIframe
           ? { zIndex: 100, paddingTop: `${Math.max(88, anchorTop - 32)}px` }

@@ -1,70 +1,64 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TRUST_POINTS } from '../data/trustPoints';
 import { ShieldCheck, UserCheck, Settings, Award, CheckCircle2, Shield } from 'lucide-react';
-import { gsap, prefersReducedMotion } from '../animations/gsap';
+import { shouldUseLightEffects } from '../utils/device';
 
 export const WhyChooseUs: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return;
+  useEffect(() => {
+    if (shouldUseLightEffects()) return;
 
-    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+    let cancelled = false;
+    let ctx: { revert: () => void } | undefined;
 
-    const ctx = gsap.context(() => {
-      const cards = cardsRef.current ? Array.from(cardsRef.current.children) : [];
+    import('../animations/gsap')
+      .then(({ gsap }) => {
+        if (cancelled || !sectionRef.current) return;
 
-      if (isEmbedded) {
-        if (titleRef.current) gsap.set(titleRef.current, { clearProps: 'all' });
-        if (cards.length) gsap.set(cards, { clearProps: 'all' });
-        return;
-      }
+        ctx = gsap.context(() => {
+          const cards = cardsRef.current ? Array.from(cardsRef.current.children) : [];
 
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 25 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 90%',
-            once: true
-          },
-          onComplete: () => {
-            if (titleRef.current) gsap.set(titleRef.current, { clearProps: 'all' });
-          }
-        }
-      );
-
-      if (cards.length) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
+          gsap.from(titleRef.current, {
+            y: 18,
             duration: 0.5,
-            stagger: 0.08,
             ease: 'power2.out',
             scrollTrigger: {
-              trigger: cardsRef.current,
-              start: 'top 85%',
+              trigger: titleRef.current,
+              start: 'top 90%',
               once: true
             },
             onComplete: () => {
-              gsap.set(cards, { clearProps: 'all' });
+              if (titleRef.current) gsap.set(titleRef.current, { clearProps: 'all' });
             }
-          }
-        );
-      }
-    }, sectionRef);
+          });
 
-    return () => ctx.revert();
+          if (cards.length) {
+            gsap.from(cards, {
+              y: 22,
+              duration: 0.45,
+              stagger: 0.06,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: cardsRef.current,
+                start: 'top 85%',
+                once: true
+              },
+              onComplete: () => {
+                gsap.set(cards, { clearProps: 'all' });
+              }
+            });
+          }
+        }, sectionRef);
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   const getIcon = (icon: string) => {
@@ -92,7 +86,7 @@ export const WhyChooseUs: React.FC = () => {
     >
       {/* Volumetric Radial Glows */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#164B9B]/20 rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[420px] bg-[radial-gradient(ellipse_at_center,rgba(22,75,155,0.22)_0%,transparent_70%)] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -131,7 +125,7 @@ export const WhyChooseUs: React.FC = () => {
           {TRUST_POINTS.map((item, index) => (
             <div
               key={item.id}
-              className={`p-4 min-[360px]:p-5 sm:p-7 md:p-8 rounded-2xl bg-gradient-to-b from-[#091526]/90 to-[#07111F]/90 backdrop-blur-md border border-slate-800 hover:border-[#1769E0]/60 transition-all duration-300 hover:-translate-y-1.5 shadow-xl hover:shadow-[0_15px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(23,105,224,0.2)] group ${
+              className={`p-4 min-[360px]:p-5 sm:p-7 md:p-8 rounded-2xl bg-gradient-to-b from-[#091526]/95 to-[#07111F]/95 md:backdrop-blur-md border border-slate-800 hover:border-[#1769E0]/60 transition-all duration-300 hover:-translate-y-1.5 shadow-xl hover:shadow-[0_15px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(23,105,224,0.2)] group ${
                 index === 3 || index === 4 ? 'lg:col-span-1.5' : ''
               }`}
             >

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { prefersReducedMotion } from '../animations/gsap';
+import { isIOSDevice, prefersReducedMotion, hasSaveDataEnabled } from '../utils/device';
 
 export const ThreeHeroCanvas: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -9,12 +9,33 @@ export const ThreeHeroCanvas: React.FC = () => {
     const container = containerRef.current;
     if (!container) return;
 
+    // Never run WebGL background particles on iOS, mobile screens, Save-Data, or reduced motion
+    if (
+      isIOSDevice() ||
+      prefersReducedMotion() ||
+      hasSaveDataEnabled() ||
+      (typeof window !== 'undefined' && window.innerWidth < 1024)
+    ) {
+      return;
+    }
+
     let cleanup: (() => void) | undefined;
     let idleId: number | undefined;
 
     const initThree = () => {
       const reducedMotion = prefersReducedMotion();
       const isMobile = window.innerWidth < 768;
+
+      let renderer: THREE.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          alpha: true,
+          antialias: false,
+          powerPreference: 'low-power'
+        });
+      } catch {
+        return;
+      }
 
       // Set up Scene, Camera, Renderer
       const scene = new THREE.Scene();
@@ -25,13 +46,8 @@ export const ThreeHeroCanvas: React.FC = () => {
       const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
       camera.position.z = 24;
 
-      const renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: false,
-        powerPreference: 'low-power'
-      });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
       container.appendChild(renderer.domElement);
 
     // 1. Subtle Constellation Network (Light & Minimalist Telemetry)
@@ -199,11 +215,18 @@ export const ThreeHeroCanvas: React.FC = () => {
       renderer.render(scene, camera);
     };
 
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      cancelAnimationFrame(animationFrameId);
+    };
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+
     animate();
 
     // Cleanup resources to prevent memory leaks
     cleanup = () => {
         cancelAnimationFrame(animationFrameId);
+        renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
         if (observer) observer.disconnect();
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('resize', handleResize);

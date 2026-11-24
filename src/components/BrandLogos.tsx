@@ -24,6 +24,9 @@ export const GeneraLogo: React.FC<LogoProps> = ({
       <img
         src={getAssetPath('/images/LOGO%20GENERA%20-%20AUTOMOTRIZ%20_%20Bco_1.png')}
         alt="Genera Automotriz - Servicio Automotriz Profesional"
+        width="160"
+        height="67"
+        decoding="async"
         className={imgClassName}
         style={imgStyle}
       />
@@ -44,6 +47,10 @@ export const PeisaLogo: React.FC<{ className?: string; imgStyle?: React.CSSPrope
       <img
         src={getAssetPath('/images/LogoPeisa_.jpg')}
         alt="PEISA - Distribución de partes y equipos"
+        width="240"
+        height="70"
+        loading="lazy"
+        decoding="async"
         className="w-[240px] h-[70px] max-w-full object-contain rounded-[9px]"
         style={{ width: '240px', height: '70px', borderRadius: '9px', ...imgStyle }}
       />

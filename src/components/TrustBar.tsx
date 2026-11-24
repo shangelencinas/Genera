@@ -1,48 +1,45 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ShieldCheck, UserCheck, Settings, Award, CheckCircle2 } from 'lucide-react';
-import { gsap, prefersReducedMotion } from '../animations/gsap';
+import { shouldUseLightEffects } from '../utils/device';
 
 export const TrustBar: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return;
+  useEffect(() => {
+    if (shouldUseLightEffects()) return;
 
-    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+    let cancelled = false;
+    let ctx: { revert: () => void } | undefined;
 
-    const ctx = gsap.context(() => {
-      if (!itemsRef.current) return;
-      const children = Array.from(itemsRef.current.children);
+    import('../animations/gsap')
+      .then(({ gsap }) => {
+        if (cancelled || !itemsRef.current || !containerRef.current) return;
+        const children = Array.from(itemsRef.current.children);
 
-      if (isEmbedded) {
-        // In iframe or mobile, reveal directly with clearProps to avoid blank bar
-        gsap.set(children, { opacity: 1, y: 0, clearProps: 'all' });
-        return;
-      }
+        ctx = gsap.context(() => {
+          gsap.from(children, {
+            y: 16,
+            duration: 0.45,
+            stagger: 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 95%',
+              once: true
+            },
+            onComplete: () => {
+              gsap.set(children, { clearProps: 'all' });
+            }
+          });
+        }, containerRef);
+      })
+      .catch(() => {});
 
-      gsap.fromTo(
-        children,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 95%',
-            once: true
-          },
-          onComplete: () => {
-            gsap.set(children, { clearProps: 'all' });
-          }
-        }
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   const items = [

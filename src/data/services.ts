@@ -32,7 +32,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Servicio integral a motor y componentes de tracción'
     ],
     icon: 'wrench',
-    image: getAssetPath('/images/Mecanica General.jpg'),
+    image: getAssetPath('/images/Mecanica%20General.jpg'),
     category: 'mecanica'
   },
   {

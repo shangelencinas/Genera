@@ -1,9 +1,9 @@
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES_DATA } from '../data/services';
 import { ServiceCard } from './ServiceCard';
 import { ServiceModal } from './ServiceModal';
 import { ServiceItem } from '../types';
-import { gsap, prefersReducedMotion, isInIframe } from '../animations/gsap';
+import { isInIframe, shouldUseLightEffects } from '../utils/device';
 import { Wrench } from 'lucide-react';
 
 interface ServicesProps {
@@ -27,66 +27,57 @@ export const Services: React.FC<ServicesProps> = ({ onOpenAppointmentModal }) =>
     setSelectedService(service);
   };
 
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return;
+  useEffect(() => {
+    if (shouldUseLightEffects()) return;
 
-    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+    let cancelled = false;
+    let ctx: { revert: () => void } | undefined;
 
-    const ctx = gsap.context(() => {
-      const cards = gridRef.current ? Array.from(gridRef.current.children) : [];
+    import('../animations/gsap')
+      .then(({ gsap }) => {
+        if (cancelled || !sectionRef.current) return;
 
-      if (isEmbedded) {
-        // Direct reveal with zero opacity risk
-        if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
-        if (cards.length) gsap.set(cards, { clearProps: 'all' });
-        return;
-      }
+        ctx = gsap.context(() => {
+          const cards = gridRef.current ? Array.from(gridRef.current.children) : [];
 
-      // Header Animation
-      gsap.fromTo(
-        headerRef.current,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: 'top 90%',
-            once: true
-          },
-          onComplete: () => {
-            if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
-          }
-        }
-      );
-
-      // Stagger Cards Animation
-      if (cards.length) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
+          gsap.from(headerRef.current, {
+            y: 16,
             duration: 0.5,
-            stagger: 0.08,
             ease: 'power2.out',
             scrollTrigger: {
-              trigger: gridRef.current,
-              start: 'top 85%',
+              trigger: headerRef.current,
+              start: 'top 90%',
               once: true
             },
             onComplete: () => {
-              gsap.set(cards, { clearProps: 'all' });
+              if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
             }
-          }
-        );
-      }
-    }, sectionRef);
+          });
 
-    return () => ctx.revert();
+          if (cards.length) {
+            gsap.from(cards, {
+              y: 22,
+              duration: 0.45,
+              stagger: 0.06,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: gridRef.current,
+                start: 'top 85%',
+                once: true
+              },
+              onComplete: () => {
+                gsap.set(cards, { clearProps: 'all' });
+              }
+            });
+          }
+        }, sectionRef);
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return (
@@ -99,7 +90,7 @@ export const Services: React.FC<ServicesProps> = ({ onOpenAppointmentModal }) =>
     >
       {/* Volumetric Radial Glow */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#164B9B]/20 rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[420px] bg-[radial-gradient(ellipse_at_center,rgba(22,75,155,0.22)_0%,transparent_70%)] pointer-events-none"
         aria-hidden="true"
       />
 

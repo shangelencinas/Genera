@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CONTACT_INFO } from '../data/trustPoints';
 import { SERVICES_DATA } from '../data/services';
 import { getWhatsAppUrl } from '../utils/whatsapp';
@@ -11,10 +11,9 @@ import {
   CheckCircle2,
   ArrowRight,
   Sparkles,
-  ShieldCheck,
-  Check
+  ShieldCheck
 } from 'lucide-react';
-import { gsap, prefersReducedMotion } from '../animations/gsap';
+import { shouldUseLightEffects } from '../utils/device';
 
 interface ContactSectionProps {
   initialServiceId?: string;
@@ -36,78 +35,66 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialServiceId
     }
   }, [initialServiceId]);
 
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return;
+  useEffect(() => {
+    if (shouldUseLightEffects()) return;
 
-    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+    let cancelled = false;
+    let ctx: { revert: () => void } | undefined;
 
-    const ctx = gsap.context(() => {
-      if (isEmbedded) {
-        if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
-        if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
-        if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
-        return;
-      }
+    import('../animations/gsap')
+      .then(({ gsap }) => {
+        if (cancelled || !sectionRef.current) return;
 
-      gsap.fromTo(
-        headerRef.current,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 85%',
-            once: true
-          },
-          onComplete: () => {
-            if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
-          }
-        }
-      );
+        ctx = gsap.context(() => {
+          gsap.from(headerRef.current, {
+            y: 16,
+            duration: 0.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 85%',
+              once: true
+            },
+            onComplete: () => {
+              if (headerRef.current) gsap.set(headerRef.current, { clearProps: 'all' });
+            }
+          });
 
-      gsap.fromTo(
-        leftColRef.current,
-        { opacity: 0, x: -20 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            once: true
-          },
-          onComplete: () => {
-            if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
-          }
-        }
-      );
+          gsap.from(leftColRef.current, {
+            x: -16,
+            duration: 0.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              once: true
+            },
+            onComplete: () => {
+              if (leftColRef.current) gsap.set(leftColRef.current, { clearProps: 'all' });
+            }
+          });
 
-      gsap.fromTo(
-        rightColRef.current,
-        { opacity: 0, x: 20 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            once: true
-          },
-          onComplete: () => {
-            if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
-          }
-        }
-      );
-    }, sectionRef);
+          gsap.from(rightColRef.current, {
+            x: 16,
+            duration: 0.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              once: true
+            },
+            onComplete: () => {
+              if (rightColRef.current) gsap.set(rightColRef.current, { clearProps: 'all' });
+            }
+          });
+        }, sectionRef);
+      })
+      .catch(() => {});
 
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   const currentServiceObj = SERVICES_DATA.find((s) => s.id === selectedService);
@@ -121,11 +108,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialServiceId
     >
       {/* Background Lighting Accents */}
       <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[#164B9B]/20 rounded-full blur-[160px] pointer-events-none"
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[820px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(22,75,155,0.24)_0%,transparent_70%)] pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-10 right-10 w-[400px] h-[300px] bg-emerald-600/10 rounded-full blur-[140px] pointer-events-none"
+        className="absolute bottom-10 right-10 w-[420px] h-[320px] bg-[radial-gradient(ellipse_at_center,rgba(5,150,105,0.14)_0%,transparent_70%)] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -138,15 +125,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialServiceId
             <span>ATENCIÓN TÉCNICA INMEDIATA</span>
           </div>
 
-          <h2
-            className="text-[47px] font-black tracking-tight text-white mb-3 sm:mb-4 leading-tight"
-            style={{ fontSize: '47px' }}
-          >
+          <h2 className="text-[30px] sm:text-[47px] font-black tracking-tight text-white mb-3 sm:mb-4 leading-tight">
             ¿TU AUTO NECESITA SERVICIO? <br className="hidden sm:inline" />
-            <span
-              className="text-[60px] text-transparent bg-clip-text bg-gradient-to-r from-[#38BDF8] via-[#1769E0] to-[#60A5FA]"
-              style={{ fontSize: '60px' }}
-            >
+            <span className="text-[38px] sm:text-[60px] text-transparent bg-clip-text bg-gradient-to-r from-[#38BDF8] via-[#1769E0] to-[#60A5FA]">
               AGENDA TU CITA
             </span>
           </h2>

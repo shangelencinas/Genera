@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Clock, Phone, MessageCircle, Navigation, ExternalLink } from 'lucide-react';
 import { CONTACT_INFO } from '../data/trustPoints';
+import { isInIframe, isIOSDevice } from '../utils/device';
 
 export const LocationMapSection: React.FC = () => {
   const googleMapsSearchUrl = 'https://www.google.com/maps/search/?api=1&query=Genera+Automotriz+Hermosillo+Sonora';
@@ -9,14 +10,14 @@ export const LocationMapSection: React.FC = () => {
   const mapContainerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    // If inside an iframe where IntersectionObserver might not trigger because the parent window scrolls,
-    // or if the browser doesn't fire observer immediately, provide a fallback.
-    const isEmbedded = typeof window !== 'undefined' && window.self !== window.top;
+    const isEmbedded = isInIframe();
+    const isIOS = isIOSDevice();
+
     if (isEmbedded) {
-      // In Elementor iframe, load the map after a short delay so user has it ready
+      // Wait longer on iOS/embedded so critical content paints first before spawning nested Google Maps iframe
       const timer = setTimeout(() => {
         setShouldLoadMap(true);
-      }, 1200);
+      }, isIOS ? 2800 : 1800);
       return () => clearTimeout(timer);
     }
 
@@ -56,7 +57,7 @@ export const LocationMapSection: React.FC = () => {
   return (
     <section id="ubicacion" className="py-12 sm:py-20 bg-[#07111F] text-white border-t border-slate-800/80 relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[300px] bg-[#164B9B]/15 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[520px] h-[320px] bg-[radial-gradient(ellipse_at_center,rgba(22,75,155,0.18)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -171,7 +172,7 @@ export const LocationMapSection: React.FC = () => {
           {/* Right Column: Google Maps Interactive Embed */}
           <div ref={mapContainerRef} className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative min-h-[340px] sm:min-h-[440px] bg-slate-950">
             {/* Visual Business Marker Badge over Map */}
-            <div className="absolute top-3.5 left-3.5 z-10 p-2.5 sm:p-3 rounded-2xl bg-slate-950/95 backdrop-blur-md border border-slate-700/90 shadow-2xl flex items-center gap-2.5 sm:gap-3 pointer-events-none">
+            <div className="absolute top-3.5 left-3.5 z-10 p-2.5 sm:p-3 rounded-2xl bg-slate-950/95 md:backdrop-blur-md border border-slate-700/90 shadow-2xl flex items-center gap-2.5 sm:gap-3 pointer-events-none">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-600/40 shrink-0">
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 fill-white text-white" />
               </div>
@@ -200,13 +201,20 @@ export const LocationMapSection: React.FC = () => {
                 className="w-full h-full filter contrast-105"
               />
             ) : (
-              <div className="w-full h-full min-h-[360px] flex items-center justify-center bg-slate-950 text-slate-500 font-mono text-xs">
-                Cargando mapa interactivo...
+              <div className="w-full h-full min-h-[360px] flex flex-col items-center justify-center gap-3 bg-slate-950 text-slate-400 font-mono text-xs px-4 text-center">
+                <span>Cargando mapa interactivo...</span>
+                <button
+                  type="button"
+                  onClick={() => setShouldLoadMap(true)}
+                  className="px-4 py-2 rounded-lg bg-[#164B9B]/40 border border-[#1769E0]/50 text-[#38BDF8] font-sans font-semibold text-xs hover:bg-[#164B9B]/60 transition-colors"
+                >
+                  Cargar mapa ahora
+                </button>
               </div>
             )}
 
             {/* Floating Quick Navigation Chip */}
-            <div className="absolute bottom-3 left-3 right-3 sm:right-auto sm:max-w-xs p-3 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-700/80 shadow-xl flex items-center justify-between gap-3 text-xs z-10">
+            <div className="absolute bottom-3 left-3 right-3 sm:right-auto sm:max-w-xs p-3 rounded-xl bg-slate-950/95 md:backdrop-blur-md border border-slate-700/80 shadow-xl flex items-center justify-between gap-3 text-xs z-10">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-white font-medium">Taller Abierto en Hermosillo</span>

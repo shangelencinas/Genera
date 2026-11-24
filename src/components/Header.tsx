@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GeneraLogo } from './BrandLogos';
 import { MessageCircle, Menu, X, Calendar, ArrowRight } from 'lucide-react';
 import { CONTACT_INFO } from '../data/trustPoints';
-import { isInIframe } from '../animations/gsap';
+import { isInIframe } from '../utils/device';
 
 interface HeaderProps {
   onOpenAppointmentModal: (serviceId?: string) => void;
@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#07111F]/95 backdrop-blur-xl border-b border-slate-700/60 shadow-2xl shadow-black/50 py-2.5 sm:py-3'
+            ? 'bg-[#07111F]/95 sm:backdrop-blur-xl border-b border-slate-700/60 shadow-2xl shadow-black/50 py-2.5 sm:py-3'
             : 'bg-gradient-to-b from-[#050C17]/95 via-[#07111F]/70 to-transparent py-3.5 sm:py-5'
         }`}
       >
@@ -99,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
             </a>
 
             {/* Zone 2: Navigation Links (Desktop) */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/80 backdrop-blur-md">
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 bg-slate-900/75 p-1.5 rounded-full border border-slate-800/80 lg:backdrop-blur-md">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.id;
                 const isExternal = link.href.startsWith('http');
@@ -184,7 +184,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAppointmentModal }) => {
       {/* Mobile Navigation Drawer with Backdrop */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md lg:hidden transition-opacity"
+          className="fixed inset-0 z-50 bg-black/85 sm:backdrop-blur-md lg:hidden transition-opacity"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div

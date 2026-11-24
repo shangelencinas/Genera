@@ -11,7 +11,6 @@ import {
   CircleDot,
   ArrowRight
 } from 'lucide-react';
-import { gsap } from '../animations/gsap';
 import { getWhatsAppUrl } from '../utils/whatsapp';
 
 interface ServiceCardProps {
@@ -22,12 +21,9 @@ interface ServiceCardProps {
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({
   service,
-  onSelectService,
-  onQuickBook
+  onSelectService
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const iconRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
@@ -52,62 +48,10 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     }
   };
 
-  const handleMouseEnter = () => {
-    if (cardRef.current) {
-      gsap.to(cardRef.current, {
-        y: -6,
-        boxShadow: '0 20px 35px -8px rgba(0, 0, 0, 0.6), 0 0 20px 2px rgba(23, 105, 224, 0.25)',
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    }
-    if (iconRef.current) {
-      gsap.to(iconRef.current, {
-        scale: 1.1,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    }
-    if (lineRef.current) {
-      gsap.to(lineRef.current, {
-        scaleX: 1,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (cardRef.current) {
-      gsap.to(cardRef.current, {
-        y: 0,
-        boxShadow: '0 4px 15px -3px rgba(0, 0, 0, 0.3)',
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    }
-    if (iconRef.current) {
-      gsap.to(iconRef.current, {
-        scale: 1,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    }
-    if (lineRef.current) {
-      gsap.to(lineRef.current, {
-        scaleX: 0,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    }
-  };
-
   return (
     <div
       ref={cardRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="service-card group relative flex flex-col justify-between p-4 min-[360px]:p-5 sm:p-7 rounded-2xl bg-gradient-to-b from-[#091526]/95 to-[#07111F]/95 backdrop-blur-md border border-slate-800 hover:border-[#1769E0]/60 shadow-xl transition-all duration-300 overflow-hidden cursor-pointer active:scale-[0.99]"
+      className="service-card group relative flex flex-col justify-between p-4 min-[360px]:p-5 sm:p-7 rounded-2xl bg-gradient-to-b from-[#091526]/95 to-[#07111F]/95 md:backdrop-blur-md border border-slate-800 hover:border-[#1769E0]/60 shadow-xl hover:-translate-y-1.5 hover:shadow-[0_20px_35px_-8px_rgba(0,0,0,0.6),0_0_20px_2px_rgba(23,105,224,0.25)] transition-all duration-300 overflow-hidden cursor-pointer active:scale-[0.99]"
       onClick={() => onSelectService(service, cardRef.current)}
       role="button"
       tabIndex={0}
@@ -121,8 +65,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     >
       {/* Top Blue Active Accent Line */}
       <div
-        ref={lineRef}
-        className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#164B9B] via-[#1769E0] to-[#38BDF8] transform scale-x-0 origin-left z-10"
+        className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#164B9B] via-[#1769E0] to-[#38BDF8] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10"
         aria-hidden="true"
       />
 
@@ -140,7 +83,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
         <div className="absolute inset-0 bg-gradient-to-t from-[#091526] via-[#091526]/20 to-transparent" />
 
         {/* Clean Number Badge floating on photo */}
-        <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-slate-950/80 backdrop-blur-sm text-[10px] sm:text-xs font-mono font-extrabold tracking-wider text-[#38BDF8] border border-slate-700/80 shadow">
+        <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-slate-950/90 md:backdrop-blur-sm text-[10px] sm:text-xs font-mono font-extrabold tracking-wider text-[#38BDF8] border border-slate-700/80 shadow">
           {service.number}
         </span>
       </div>
@@ -150,8 +93,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
         <div className="flex items-start justify-between mb-2.5 sm:mb-3.5">
           {/* Circular Icon Container */}
           <div
-            ref={iconRef}
-            className="w-9 h-9 min-[360px]:w-10 min-[360px]:h-10 sm:w-11 sm:h-11 rounded-xl bg-[#164B9B]/20 border border-[#1769E0]/30 flex items-center justify-center p-1.5 min-[360px]:p-2 sm:p-2.5 group-hover:bg-[#164B9B]/35 group-hover:border-[#1769E0]/60 group-hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] transition-all shadow-sm"
+            className="w-9 h-9 min-[360px]:w-10 min-[360px]:h-10 sm:w-11 sm:h-11 rounded-xl bg-[#164B9B]/20 border border-[#1769E0]/30 flex items-center justify-center p-1.5 min-[360px]:p-2 sm:p-2.5 group-hover:scale-110 group-hover:bg-[#164B9B]/35 group-hover:border-[#1769E0]/60 group-hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] transition-all duration-300 shadow-sm"
           >
             {getIcon(service.icon)}
           </div>

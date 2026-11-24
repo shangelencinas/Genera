@@ -18,7 +18,7 @@ import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { getWhatsAppUrl } from './utils/whatsapp';
 import { initIframeResizeBridge, notifyParentHeight } from './utils/iframeBridge';
-import { isInIframe } from './animations/gsap';
+import { isInIframe } from './utils/device';
 
 // Lazy-load internal Elementor tools so they don't bloat the main landing page
 const BlogPostTemplatePage = lazy(() =>
@@ -41,7 +41,7 @@ export default function App() {
     const handleHashChange = () => {
       if (window.location.hash === '#blog-template' || window.location.hash === '#single-post') {
         setCurrentView('blog-template');
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        window.scrollTo({ top: 0, behavior: 'auto' });
       } else if (!window.location.hash || window.location.hash === '#inicio') {
         setCurrentView('home');
       }

@@ -10,7 +10,7 @@ export const DiagnosticFirstRule: React.FC = () => {
     >
       {/* Subtle atmospheric glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#164B9B]/15 rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[360px] bg-[radial-gradient(ellipse_at_center,rgba(22,75,155,0.18)_0%,transparent_70%)] pointer-events-none"
         aria-hidden="true"
       />
 

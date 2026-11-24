@@ -7,6 +7,8 @@
  * }
  */
 
+import { isInIframe } from './device';
+
 let lastSentHeight = 0;
 let rafId: number | null = null;
 let isInitialized = false;
@@ -100,7 +102,11 @@ export const notifyParentHeight = (force = false): void => {
  * Sets up listeners for DOM, window, fonts, images and ResizeObserver
  */
 export const initIframeResizeBridge = (): (() => void) => {
-  if (typeof window === 'undefined' || isInitialized) {
+  if (typeof window === 'undefined' || !isInIframe()) {
+    return () => {};
+  }
+
+  if (isInitialized) {
     // Force a height update on re-entry (e.g. view switch)
     notifyParentHeight(true);
     return () => {};
@@ -150,7 +156,8 @@ export const initIframeResizeBridge = (): (() => void) => {
     }
   }
 
-  // 6. MutationObserver to catch dynamically added nodes / modals / sections
+  // 6. MutationObserver to catch dynamically added/removed nodes (modals / lazy sections)
+  // Avoid attribute observation so hover/style updates never trigger forced reflows on iOS.
   let mutationObserver: MutationObserver | null = null;
   if ('MutationObserver' in window && document.body) {
     mutationObserver = new MutationObserver(() => {
@@ -158,9 +165,7 @@ export const initIframeResizeBridge = (): (() => void) => {
     });
     mutationObserver.observe(document.body, {
       childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['style', 'class', 'hidden']
+      subtree: true
     });
   }
 

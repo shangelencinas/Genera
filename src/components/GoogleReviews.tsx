@@ -63,7 +63,7 @@ export const GoogleReviews: React.FC = () => {
   return (
     <section id="resenas" className="py-12 sm:py-20 bg-[#060D19] text-white border-t border-slate-800/80 relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute top-1/3 right-1/4 w-[450px] h-[300px] bg-[#1769E0]/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[480px] h-[320px] bg-[radial-gradient(ellipse_at_center,rgba(23,105,224,0.14)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header with Google Brand Badge */}

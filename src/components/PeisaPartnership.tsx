@@ -1,44 +1,44 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PeisaLogo } from './BrandLogos';
 import { Handshake } from 'lucide-react';
-import { gsap, prefersReducedMotion } from '../animations/gsap';
+import { shouldUseLightEffects } from '../utils/device';
 
 export const PeisaPartnership: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return;
+  useEffect(() => {
+    if (shouldUseLightEffects()) return;
 
-    const isEmbedded = typeof window !== 'undefined' && (window.innerWidth < 768 || window.self !== window.top);
+    let cancelled = false;
+    let ctx: { revert: () => void } | undefined;
 
-    const ctx = gsap.context(() => {
-      if (isEmbedded) {
-        if (containerRef.current) gsap.set(containerRef.current, { clearProps: 'all' });
-        return;
-      }
+    import('../animations/gsap')
+      .then(({ gsap }) => {
+        if (cancelled || !sectionRef.current || !containerRef.current) return;
 
-      gsap.fromTo(
-        containerRef.current,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 90%',
-            once: true
-          },
-          onComplete: () => {
-            if (containerRef.current) gsap.set(containerRef.current, { clearProps: 'all' });
-          }
-        }
-      );
-    }, sectionRef);
+        ctx = gsap.context(() => {
+          gsap.from(containerRef.current, {
+            y: 16,
+            duration: 0.45,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 90%',
+              once: true
+            },
+            onComplete: () => {
+              if (containerRef.current) gsap.set(containerRef.current, { clearProps: 'all' });
+            }
+          });
+        }, sectionRef);
+      })
+      .catch(() => {});
 
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return (

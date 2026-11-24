@@ -1,9 +1,18 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { Calendar, ArrowRight, ShieldCheck, Wrench, Award, ChevronDown, MapPin, CheckCircle } from 'lucide-react';
-import { gsap, prefersReducedMotion, isInIframe } from '../animations/gsap';
-import { ThreeHeroCanvas } from './ThreeHeroCanvas';
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { Calendar, ArrowRight, ShieldCheck, Wrench, ChevronDown, MapPin, CheckCircle } from 'lucide-react';
+import {
+  isInIframe,
+  isIOSDevice,
+  prefersReducedMotion,
+  hasSaveDataEnabled,
+  shouldUseLightEffects
+} from '../utils/device';
 import { getWhatsAppUrl } from '../utils/whatsapp';
 import { getAssetPath } from '../utils/assets';
+
+const LazyThreeHeroCanvas = lazy(() =>
+  import('./ThreeHeroCanvas').then((m) => ({ default: m.ThreeHeroCanvas }))
+);
 
 interface HeroProps {
   onOpenAppointmentModal: () => void;
@@ -20,87 +29,68 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
   const visualCardRef = useRef<HTMLDivElement>(null);
 
   const embedded = isInIframe();
+  const [show3DCanvas, setShow3DCanvas] = useState(false);
 
-  useLayoutEffect(() => {
-    const getAnimatedTargets = () => [
-      eyebrowRef.current,
-      headlineLine1Ref.current,
-      headlineLine2Ref.current,
-      subtextRef.current,
-      ctaContainerRef.current,
-      ...(trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : []),
-      visualCardRef.current
-    ].filter(Boolean);
-
-    if (prefersReducedMotion()) {
-      gsap.set(getAnimatedTargets(), { clearProps: 'all' });
+  // Only load Three.js decorative background on desktop (never on iOS, mobile, or Save-Data)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (
+      isIOSDevice() ||
+      prefersReducedMotion() ||
+      hasSaveDataEnabled() ||
+      window.innerWidth < 1024
+    ) {
       return;
     }
 
-    // Inside an iframe or mobile, reveal immediately to guarantee zero blank elements
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const shouldRevealImmediately = isMobile || isInIframe();
+    const timer = setTimeout(() => {
+      setShow3DCanvas(true);
+    }, 350);
 
-    const ctx = gsap.context(() => {
-      const targets = getAnimatedTargets();
+    return () => clearTimeout(timer);
+  }, []);
 
-      if (shouldRevealImmediately) {
-        gsap.set(targets, { clearProps: 'all' });
-        return;
-      }
+  // Desktop-only subtle entrance; iOS, mobile, and iframe render immediately with zero GSAP overhead
+  useEffect(() => {
+    if (shouldUseLightEffects()) return;
 
-      const tl = gsap.timeline({
-        defaults: { ease: 'power3.out' },
-        onComplete: () => {
-          gsap.set(targets, { clearProps: 'all' });
-        }
-      });
+    let cancelled = false;
+    let ctx: { revert: () => void } | undefined;
 
-      tl.fromTo(
-        eyebrowRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5 }
-      )
-        .fromTo(
-          [headlineLine1Ref.current, headlineLine2Ref.current],
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
-          '-=0.2'
-        )
-        .fromTo(
+    import('../animations/gsap')
+      .then(({ gsap }) => {
+        if (cancelled || !heroRef.current) return;
+
+        const targets = [
+          eyebrowRef.current,
+          headlineLine1Ref.current,
+          headlineLine2Ref.current,
           subtextRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6 },
-          '-=0.3'
-        )
-        .fromTo(
           ctaContainerRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6 },
-          '-=0.3'
-        )
-        .fromTo(
-          trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : [],
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
-          '-=0.3'
-        )
-        .fromTo(
-          visualCardRef.current,
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' },
-          '-=0.5'
-        );
-    }, heroRef);
+          ...(trustItemsRef.current?.children ? Array.from(trustItemsRef.current.children) : []),
+          visualCardRef.current
+        ].filter(Boolean);
 
-    // Safety fallback: never leave Hero elements hidden if GSAP ticker is throttled
-    const safetyTimer = setTimeout(() => {
-      gsap.set(getAnimatedTargets(), { clearProps: 'all' });
-    }, 1800);
+        ctx = gsap.context(() => {
+          const tl = gsap.timeline({
+            defaults: { ease: 'power3.out' },
+            onComplete: () => {
+              gsap.set(targets, { clearProps: 'all' });
+            }
+          });
+
+          tl.from(eyebrowRef.current, { y: 14, duration: 0.4 })
+            .from([headlineLine1Ref.current, headlineLine2Ref.current], { y: 18, duration: 0.5, stagger: 0.1 }, '-=0.25')
+            .from(subtextRef.current, { y: 12, duration: 0.45 }, '-=0.25')
+            .from(ctaContainerRef.current, { y: 12, duration: 0.45 }, '-=0.25')
+            .from(visualCardRef.current, { scale: 0.97, duration: 0.55, ease: 'power2.out' }, '-=0.35');
+        }, heroRef);
+      })
+      .catch(() => {});
 
     return () => {
-      clearTimeout(safetyTimer);
-      ctx.revert();
+      cancelled = true;
+      if (ctx) ctx.revert();
     };
   }, []);
 
@@ -114,12 +104,16 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
           : 'min-h-[90vh] lg:min-h-screen pt-24 sm:pt-28 pb-14 sm:pb-20 lg:py-32'
       } flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#040913] via-[#07111F] to-[#09172B] automotive-grid`}
     >
-      {/* 3D Automotive Particle & Telemetry Constellation */}
-      <ThreeHeroCanvas />
+      {/* 3D Automotive Particle & Telemetry Constellation (Desktop only, lazy-loaded) */}
+      {show3DCanvas && (
+        <Suspense fallback={null}>
+          <LazyThreeHeroCanvas />
+        </Suspense>
+      )}
 
-      {/* Volumetric Studio Lighting / Atmospheric Gradients */}
+      {/* Volumetric Studio Lighting / Atmospheric Gradient (GPU-friendly, zero blur filter overhead on iOS) */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[90vw] max-w-[850px] h-[350px] sm:h-[500px] bg-gradient-to-b from-[#1769E0]/15 via-[#164B9B]/10 to-transparent rounded-full blur-[120px] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[96vw] max-w-[920px] h-[380px] sm:h-[540px] bg-[radial-gradient(ellipse_at_top,rgba(23,105,224,0.22)_0%,rgba(22,75,155,0.08)_45%,transparent_72%)] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -138,12 +132,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
 
             {/* H1 Headline: Clarísimo qué somos */}
             <h1 className="leading-[1.12] font-black tracking-tight text-white mb-3 sm:mb-4 break-words">
-              <span ref={headlineLine1Ref} className="block text-[39.4px] leading-tight">
+              <span ref={headlineLine1Ref} className="block text-[32px] sm:text-[39.4px] leading-tight">
                 Taller automotriz en Hermosillo
               </span>
               <span
                 ref={headlineLine2Ref}
-                className="block mt-1 sm:mt-2 text-[31.4px] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#1769E0] drop-shadow-[0_2px_15px_rgba(56,189,248,0.25)]"
+                className="block mt-1 sm:mt-2 text-[25px] sm:text-[31.4px] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#1769E0] drop-shadow-[0_2px_15px_rgba(56,189,248,0.25)]"
               >
                 Diagnóstico preciso. Soluciones confiables.
               </span>
@@ -225,7 +219,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
               className="relative mx-auto max-w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-b from-[#0D1C33] via-[#091526] to-[#050C17] border border-slate-700/80 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(23,105,224,0.2)] group"
             >
               {/* Outer Glow Halo */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#164B9B] via-[#1769E0] to-[#38BDF8] rounded-2xl sm:rounded-3xl opacity-25 blur-sm pointer-events-none group-hover:opacity-40 transition-opacity" />
+              <div className="hidden sm:block absolute -inset-0.5 bg-gradient-to-r from-[#164B9B] via-[#1769E0] to-[#38BDF8] rounded-2xl sm:rounded-3xl opacity-25 blur-sm pointer-events-none group-hover:opacity-40 transition-opacity" />
 
               {/* Main Visual Frame */}
               <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] overflow-hidden bg-[#0A1628]">
@@ -240,7 +234,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenAppointmentModal }) => {
                 />
 
                 {/* Floating Telemetry Glass Badge */}
-                <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 bg-slate-950/90 backdrop-blur-xl border border-slate-700/80 rounded-lg sm:rounded-xl p-2 sm:p-3 text-left shadow-2xl">
+                <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 bg-slate-950/95 sm:backdrop-blur-md border border-slate-700/80 rounded-lg sm:rounded-xl p-2 sm:p-3 text-left shadow-2xl">
                   <div className="flex items-center gap-1.5 mb-1">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
                     <span className="text-[9px] sm:text-[10px] font-mono font-bold text-emerald-400 tracking-wider">TALLER ACTIVO</span>
